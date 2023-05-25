@@ -1,7 +1,7 @@
-Members:
-Benjamin Rayner
-Cihan Sariyildiz
-Ericson So
-Justin Huynh
-Pawan Iyer
+Members:</br>
+Benjamin Rayner</br>
+Cihan Sariyildiz</br>
+Ericson So</br>
+Justin Huynh</br>
+Pawan Iyer</br>
 Zeen Wang
