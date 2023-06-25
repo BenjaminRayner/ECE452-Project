@@ -8,7 +8,11 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
 import com.example.tripgen.databinding.FragmentDateBinding;
+
+//TODO: Override back button to always go back to TripFragment
+//TODO: After creation of a new trip, currently it goes back to TripCreationFragment
 
 public class DateFragment extends Fragment {
 

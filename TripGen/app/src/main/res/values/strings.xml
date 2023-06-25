@@ -95,4 +95,12 @@
         <item>Saturday June 10, 2000</item>
         <item>Sunday June 11, 2000</item>
     </string-array>
+
+    <!-- Trip creation-->
+    <string name="title_trip_creation">Trip Title</string>
+    <string name="hint_select_dates">Select a start and end date</string>
+    <string name="button_submit">Submit</string>
+    <string name="trip_name_hint">Trip to XYZ</string>
+    <string name="invalid_date">Invalid date range selected</string>
+    <string name="empty_trip_name">Please input a trip name</string>
 </resources>

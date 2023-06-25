@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/TripFragment">
+    app:startDestination="@id/TripCreationFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_TripFragment_to_DateFragment"
             app:destination="@id/DateFragment" />
+        <action
+            android:id="@+id/action_TripFragment_to_TripCreationFragment"
+            app:destination="@id/TripCreationFragment" />
     </fragment>
     <fragment
         android:id="@+id/DateFragment"
@@ -44,5 +47,14 @@
         <action
             android:id="@+id/action_DateFragment_to_TripFragment"
             app:destination="@id/TripFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TripCreationFragment"
+        android:name="com.example.tripgen.TripCreationFragment"
+        android:label="Trip Creation Fragment"
+        tools:layout="@layout/fragment_trip_creation">
+        <action
+            android:id="@+id/action_TripCreationFragment_to_DateFragment"
+            app:destination="@id/DateFragment" />
     </fragment>
 </navigation>
