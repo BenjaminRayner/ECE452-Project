@@ -34,6 +34,14 @@ public class TripFragment extends Fragment {
             }
         });
 
+        binding.newTripFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TripFragment.this)
+                        .navigate(R.id.action_TripFragment_to_TripCreationFragment);
+            }
+        });
+
         return view;
     }
 
