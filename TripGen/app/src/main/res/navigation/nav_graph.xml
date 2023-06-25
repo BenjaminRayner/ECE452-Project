@@ -43,10 +43,9 @@
         android:name="com.example.tripgen.DateFragment"
         android:label="Date Fragment"
         tools:layout="@layout/fragment_date">
-
         <action
-            android:id="@+id/action_DateFragment_to_TripFragment"
-            app:destination="@id/TripFragment" />
+            android:id="@+id/action_DateFragment_to_ItineraryFragment"
+            app:destination="@id/ItineraryFragment" />
     </fragment>
     <fragment
         android:id="@+id/TripCreationFragment"
@@ -56,5 +55,11 @@
         <action
             android:id="@+id/action_TripCreationFragment_to_DateFragment"
             app:destination="@id/DateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ItineraryFragment"
+        android:name="com.example.tripgen.ItineraryFragment"
+        android:label="Itinerary Fragment"
+        tools:layout="@layout/fragment_itinerary">
     </fragment>
 </navigation>
