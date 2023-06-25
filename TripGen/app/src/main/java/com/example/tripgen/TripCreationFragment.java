@@ -23,36 +23,32 @@ public class TripCreationFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = FragmentTripCreationBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Pair<Long, Long> defaultSelection = Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds());
-
-        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.
-                Builder.dateRangePicker().setSelection(defaultSelection).build();
-
-
-        binding.tripSubmitButton.setOnClickListener(view1 -> {
-            String tripName = binding.editTripName.getText().toString().trim();
-
-            if (materialDatePicker.getHeaderText() == null || materialDatePicker.getHeaderText().equals("") ) {
-                Toast.makeText(requireContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
-            } else if (tripName.isEmpty() ) {
-                Toast.makeText(requireContext(), R.string.empty_trip_name, Toast.LENGTH_SHORT).show();
-            } else {
-                NavHostFragment.findNavController(TripCreationFragment.this)
-                    .navigate(R.id.action_TripCreationFragment_to_DateFragment);
-            }
-        });
 
         binding.calendarButton.setOnClickListener(v -> {
+            Pair<Long, Long> defaultSelection = Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds());
+
+            MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.
+                    Builder.dateRangePicker().setSelection(defaultSelection).build();
+
             materialDatePicker.show(getParentFragmentManager(), "Tag_picker");
-            materialDatePicker.addOnPositiveButtonClickListener(selection -> binding.dateRangeSelection.setText(materialDatePicker.getHeaderText()));
+            materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+
+                String tripName = binding.editTripName.getText().toString().trim();
+                if (materialDatePicker.getHeaderText() == null || materialDatePicker.getHeaderText().equals("")) {
+                    Toast.makeText(requireContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+                } else if (tripName.isEmpty()) {
+                    Toast.makeText(requireContext(), R.string.empty_trip_name, Toast.LENGTH_SHORT).show();
+                } else {
+                    NavHostFragment.findNavController(TripCreationFragment.this)
+                            .navigate(R.id.action_TripCreationFragment_to_DateFragment);
+                }
+            });
         });
     }
 

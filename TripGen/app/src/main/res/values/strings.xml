@@ -61,11 +61,8 @@
 
     <!-- Trip creation-->
     <string name="title_trip_creation">Trip Title</string>
-    <string name="hint_select_dates">Select a start and end date</string>
-    <string name="button_submit">Submit</string>
     <string name="trip_name_hint">Trip to XYZ</string>
     <string name="invalid_date">Invalid date range selected</string>
     <string name="empty_trip_name">Please input a trip name</string>
-    <string name="open_calendar">Open Calendar</string>
-    <string name="date_range_selection">Start Date - End Date</string>
+    <string name="select_dates">Select Dates</string>
 </resources>
