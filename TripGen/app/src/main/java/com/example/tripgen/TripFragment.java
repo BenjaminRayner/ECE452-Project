@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class TripFragment extends Fragment {
 
@@ -28,7 +28,8 @@ public class TripFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(requireContext(), "" + trips[i], Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(TripFragment.this)
+                        .navigate(R.id.action_TripFragment_to_DateFragment);
             }
         });
 
