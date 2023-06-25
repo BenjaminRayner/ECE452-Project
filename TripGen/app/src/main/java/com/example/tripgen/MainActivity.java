@@ -10,9 +10,17 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tripgen.databinding.ActivityMainBinding;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
@@ -48,6 +56,30 @@ public class MainActivity extends AppCompatActivity {
             ListView listViewChoosen = findViewById(R.id.displayItineraryListView);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, programAdapter.getPlace());
             listViewChoosen.setAdapter(adapter);
+
+            //Keep listview synced with firebase DB
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Places");
+            db.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    programAdapter.choosen_location_names.add(snapshot.getKey());
+                    adapter.notifyDataSetChanged();
+                }
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                }
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    programAdapter.choosen_location_names.remove(snapshot.getKey());
+                    adapter.notifyDataSetChanged();
+                }
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
             listViewChoosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

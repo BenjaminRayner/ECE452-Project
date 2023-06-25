@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,8 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     }
 
     private void setPlace(String name){
-        choosen_location_names.add(name);
+        FirebaseDatabase.getInstance().getReference().child("Places").child(name).setValue(true);
+//        choosen_location_names.add(name);
     }
     public List<String> getPlace(){
         return choosen_location_names;
