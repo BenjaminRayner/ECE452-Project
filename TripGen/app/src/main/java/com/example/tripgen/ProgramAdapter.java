@@ -1,18 +1,24 @@
 package com.example.tripgen;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProgramAdapter extends ArrayAdapter<String> {
     Context context;
     int[] images;
     String[] programName;
+    List<String> choosen_location_names  = new ArrayList<String>();
 
     public ProgramAdapter(@NonNull Context context, String[] programName, int[] images){
         super(context, R.layout.single_list_item, R.id.textView1, programName);
@@ -38,12 +44,22 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         }
         holder.itemImage.setImageResource(images[position]);
         holder.programTitle.setText(programName[position]);
+
+
         singleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Added: "+ programName[position], Toast.LENGTH_SHORT).show();
+                setPlace(programName[position]);
             }
         });
         return singleItem;
+    }
+
+    private void setPlace(String name){
+        choosen_location_names.add(name);
+    }
+    public List<String> getPlace(){
+        return choosen_location_names;
     }
 }
