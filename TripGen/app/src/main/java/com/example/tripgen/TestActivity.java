@@ -3,12 +3,6 @@ package com.example.tripgen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity {
 
