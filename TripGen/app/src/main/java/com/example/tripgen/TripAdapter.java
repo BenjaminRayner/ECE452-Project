@@ -1,5 +1,6 @@
 package com.example.tripgen;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,11 @@ import android.widget.TextView;
 
 public class TripAdapter extends BaseAdapter {
 
-    TestActivity testActivity;
+    Context context;
     String[] trips;
-    Animation animation;
 
-    public TripAdapter(TestActivity testActivity, String[] trips) {
-        this.testActivity = testActivity;
+    public TripAdapter(Context context, String[] trips) {
+        this.context = context;
         this.trips = trips;
     }
 
@@ -38,17 +38,14 @@ public class TripAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.trip_layout, viewGroup, false);
+        }
 
-        view = LayoutInflater.from(testActivity).inflate(R.layout.trip_layout, viewGroup, false);
-        animation = AnimationUtils.loadAnimation(testActivity, R.anim.animation1);
-
-        TextView textView;
-        LinearLayout ll_bg;
-        ll_bg = view.findViewById(R.id.ll_bg);
-        textView = view.findViewById(R.id.textview);
+        TextView textView = view.findViewById(R.id.textview);
+        LinearLayout ll_bg = view.findViewById(R.id.ll_bg);
 
         textView.setText(trips[i]);
-        textView.setAnimation(animation);
 
         return view;
     }

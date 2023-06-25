@@ -12,27 +12,14 @@ import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity {
 
-    ListView listView;
-    Animation animation;
-    String[] trips;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        listView = findViewById(R.id.list_view);
-        trips = getResources().getStringArray(R.array.trips);
-
-        TripAdapter adapter = new TripAdapter(TestActivity.this, trips);
-        animation= AnimationUtils.loadAnimation(this, R.anim.animation1);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), ""+trips[i], Toast.LENGTH_SHORT).show();
-            }
-        });
+        TripFragment tripFragment = new TripFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.trip_fragment_container, tripFragment)
+                .commit();
     }
 }
