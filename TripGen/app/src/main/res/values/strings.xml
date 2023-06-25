@@ -103,4 +103,6 @@
     <string name="trip_name_hint">Trip to XYZ</string>
     <string name="invalid_date">Invalid date range selected</string>
     <string name="empty_trip_name">Please input a trip name</string>
+    <string name="open_calendar">Open Calendar</string>
+    <string name="date_range_selection">Start Date - End Date</string>
 </resources>
