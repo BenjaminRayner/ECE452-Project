@@ -71,4 +71,28 @@
         <item>Trip to Vancouver</item>
         <item>Trip to Vancouver</item>
     </string-array>
+
+    <string-array name="dates">
+        <item>Monday June 5, 2000</item>
+        <item>Tuesday June 6, 2000</item>
+        <item>Wednesday June 7, 2000</item>
+        <item>Thursday June 8, 2000</item>
+        <item>Friday June 9, 2000</item>
+        <item>Saturday June 10, 2000</item>
+        <item>Sunday June 11, 2000</item>
+        <item>Monday June 5, 2000</item>
+        <item>Tuesday June 6, 2000</item>
+        <item>Wednesday June 7, 2000</item>
+        <item>Thursday June 8, 2000</item>
+        <item>Friday June 9, 2000</item>
+        <item>Saturday June 10, 2000</item>
+        <item>Sunday June 11, 2000</item>
+        <item>Monday June 5, 2000</item>
+        <item>Tuesday June 6, 2000</item>
+        <item>Wednesday June 7, 2000</item>
+        <item>Thursday June 8, 2000</item>
+        <item>Friday June 9, 2000</item>
+        <item>Saturday June 10, 2000</item>
+        <item>Sunday June 11, 2000</item>
+    </string-array>
 </resources>

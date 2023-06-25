@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/TripFragment">
+    app:startDestination="@id/DateFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -30,6 +30,13 @@
         android:name="com.example.tripgen.TripFragment"
         android:label="Trip Fragment"
         tools:layout="@layout/fragment_trip">
+
+    </fragment>
+    <fragment
+        android:id="@+id/DateFragment"
+        android:name="com.example.tripgen.DateFragment"
+        android:label="Date Fragment"
+        tools:layout="@layout/fragment_date">
 
     </fragment>
 </navigation>

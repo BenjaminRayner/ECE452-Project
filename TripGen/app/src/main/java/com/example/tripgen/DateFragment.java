@@ -10,25 +10,25 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-public class TripFragment extends Fragment {
+public class DateFragment extends Fragment {
 
     ListView listView;
-    String[] trips;
+    String[] dates;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trip, container, false);
+        View view = inflater.inflate(R.layout.fragment_date, container, false);
 
         listView = view.findViewById(R.id.list_view);
-        trips = getResources().getStringArray(R.array.trips);
+        dates = getResources().getStringArray(R.array.dates);
 
-        ListAdapter adapter = new ListAdapter(requireActivity(), trips);
+        ListAdapter adapter = new ListAdapter(requireActivity(), dates);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(requireContext(), "" + trips[i], Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "" + dates[i], Toast.LENGTH_SHORT).show();
             }
         });
 

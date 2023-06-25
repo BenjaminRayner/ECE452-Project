@@ -7,20 +7,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class TripAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter {
 
     Context context;
-    String[] trips;
+    String[] list;
 
-    public TripAdapter(Context context, String[] trips) {
+    public ListAdapter(Context context, String[] list) {
         this.context = context;
-        this.trips = trips;
+        this.list = list;
     }
 
 
     @Override
     public int getCount() {
-        return trips.length;
+        return list.length;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class TripAdapter extends BaseAdapter {
         }
 
         TextView textView = view.findViewById(R.id.textview);
-        textView.setText(trips[i]);
+        textView.setText(list[i]);
 
         return view;
     }
