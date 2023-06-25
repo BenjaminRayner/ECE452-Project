@@ -24,7 +24,7 @@ public class TestActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_view);
         trips = getResources().getStringArray(R.array.trips);
 
-        MainAdapter adapter = new MainAdapter(TestActivity.this, trips);
+        TripAdapter adapter = new TripAdapter(TestActivity.this, trips);
         animation= AnimationUtils.loadAnimation(this, R.anim.animation1);
         listView.setAdapter(adapter);
 

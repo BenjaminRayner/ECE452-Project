@@ -9,13 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainAdapter extends BaseAdapter {
+public class TripAdapter extends BaseAdapter {
 
     TestActivity testActivity;
     String[] trips;
     Animation animation;
 
-    public MainAdapter(TestActivity testActivity, String[] trips) {
+    public TripAdapter(TestActivity testActivity, String[] trips) {
         this.testActivity = testActivity;
         this.trips = trips;
     }
