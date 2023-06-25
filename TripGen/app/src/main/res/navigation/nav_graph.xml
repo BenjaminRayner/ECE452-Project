@@ -14,7 +14,13 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+
+        <!-- Add this action to navigate from FirstFragment to AIChatFragment -->
+        <action
+            android:id="@+id/action_FirstFragment_to_AIChatFragment"
+            app:destination="@id/aiChatFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.tripgen.SecondFragment"
@@ -24,5 +30,12 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aiChatFragment"
+        android:name="com.example.tripgen.AIChatFragment"
+        android:label="AI Chat Fragment"
+        tools:layout="@layout/fragment_a_i_chat">
     </fragment>
 </navigation>
