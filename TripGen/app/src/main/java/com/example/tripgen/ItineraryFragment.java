@@ -1,10 +1,14 @@
 package com.example.tripgen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +16,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tripgen.databinding.FragmentDateBinding;
 import com.example.tripgen.databinding.FragmentItineraryBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ItineraryFragment extends Fragment {
@@ -24,6 +31,12 @@ public class ItineraryFragment extends Fragment {
     };
 
     private Event[] events;
+    String [] location_names = {"CN Tower", "Casa Loma", "ROM", "Ripley's Aquarium"};
+    int [] location_images = {R.drawable.cn_tower, R.drawable.casa_loma, R.drawable.rom, R.drawable.ripleys};
+
+    List<String> choosen_location_names  = new ArrayList<String>();
+
+    List<Integer> choosen_location_images = new ArrayList<Integer>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,10 +45,26 @@ public class ItineraryFragment extends Fragment {
 
         events = EVENTS;
 
-        EventAdapter adapter = new EventAdapter(requireActivity(), events);
-        binding.listView.setAdapter(adapter);
+//        EventAdapter adapter = new EventAdapter(requireActivity(), events);
+//        binding.listView.setAdapter(adapter);
 
-        binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        ListView listViewMenu = (ListView) view.findViewById(R.id.listViewChoose);
+        ProgramAdapter programAdapter = new ProgramAdapter(getActivity(), location_names, location_images);
+        listViewMenu.setAdapter(programAdapter);
+
+        ListView listViewChoosen = (ListView) view.findViewById(R.id.list_view_display);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, programAdapter.getPlace());
+        listViewChoosen.setAdapter(adapter1);
+
+//        listViewChoosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("Clicked: ", programAdapter.getPlace().get(position));
+//            }
+//        });
+
+        listViewChoosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 NavHostFragment.findNavController(ItineraryFragment.this)
