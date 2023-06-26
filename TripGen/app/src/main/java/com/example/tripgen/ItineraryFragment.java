@@ -11,11 +11,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tripgen.databinding.FragmentDateBinding;
 import com.example.tripgen.databinding.FragmentItineraryBinding;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +64,30 @@ public class ItineraryFragment extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, programAdapter.getPlace());
         listViewChoosen.setAdapter(adapter1);
 
+        //Keep listview synced with firebase DB
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Places");
+        db.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                programAdapter.choosen_location_names.add(snapshot.getKey());
+                adapter1.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                programAdapter.choosen_location_names.remove(snapshot.getKey());
+                adapter1.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
 //        listViewChoosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,6 +100,14 @@ public class ItineraryFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 NavHostFragment.findNavController(ItineraryFragment.this)
                         .navigate(R.id.action_ItineraryFragment_to_thirdFragment);
+            }
+        });
+        //Remove list item when held down
+        listViewChoosen.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get(position)).removeValue();
+                return false;
             }
         });
 

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripgen.databinding.FragmentAIChatBinding;
 import com.example.tripgen.databinding.FragmentFirstBinding;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -111,6 +112,7 @@ public class AIChatFragment extends Fragment {
             public void onPlaceClick(String placeName) {
                 // Handle place click
                 Toast.makeText(getContext(), "Place: " + placeName + " added to itinerary", Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference().child("Places").child(placeName).setValue(true);
             }
         });
     }
