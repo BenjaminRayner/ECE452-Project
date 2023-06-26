@@ -14,24 +14,6 @@
     app:umanoParallaxOffset="100dp"
     app:umanoShadowHeight="4dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="false"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
-
-        </com.google.android.material.appbar.AppBarLayout>
 
 
         <ListView
@@ -41,7 +23,6 @@
             android:id="@+id/list_view_display">
         </ListView>
 
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
