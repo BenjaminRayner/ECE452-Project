@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_ai_chat) {
             Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.action_FirstFragment_to_AIChatFragment);
+                    .navigate(R.id.action_ItineraryFragment_to_AIChatFragment);
             return true;
         }
 

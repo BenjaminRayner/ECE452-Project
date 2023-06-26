@@ -10,7 +10,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/cn_tower"
+        app:srcCompat="@drawable/casa_loma"
         android:layout_margin="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
