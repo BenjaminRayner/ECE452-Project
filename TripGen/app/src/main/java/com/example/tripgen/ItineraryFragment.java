@@ -38,7 +38,7 @@ public class ItineraryFragment extends Fragment {
     };
 
     private Event[] events;
-    String [] location_names = {"CN Tower", "Casa Loma", "ROM", "Ripley's Aquarium"};
+    String [] location_names = {"CN Tower", "Casa Loma", "Royal Ontario Museum", "Ripley's Aquarium"};
     int [] location_images = {R.drawable.cn_tower, R.drawable.casa_loma, R.drawable.rom, R.drawable.ripleys};
 
     List<String> choosen_location_names  = new ArrayList<String>();
