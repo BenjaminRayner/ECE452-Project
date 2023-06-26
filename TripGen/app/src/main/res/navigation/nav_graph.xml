@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/thirdFragment">
+    app:startDestination="@id/TripFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/TripFragment"
         android:name="com.example.tripgen.TripFragment"
-        android:label="Trip Fragment"
+        android:label="Trip View"
         tools:layout="@layout/fragment_trip">
 
         <action
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/DateFragment"
         android:name="com.example.tripgen.DateFragment"
-        android:label="Date Fragment"
+        android:label="Date View"
         tools:layout="@layout/fragment_date">
         <action
             android:id="@+id/action_DateFragment_to_ItineraryFragment"
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/TripCreationFragment"
         android:name="com.example.tripgen.TripCreationFragment"
-        android:label="Trip Creation Fragment"
+        android:label="Trip Creation"
         tools:layout="@layout/fragment_trip_creation">
         <action
             android:id="@+id/action_TripCreationFragment_to_DateFragment"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/ItineraryFragment"
         android:name="com.example.tripgen.ItineraryFragment"
-        android:label="Itinerary Fragment"
+        android:label="Daily Itinerary"
         tools:layout="@layout/fragment_itinerary">
         <action
             android:id="@+id/action_ItineraryFragment_to_thirdFragment"
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/thirdFragment"
-        android:name="com.example.tripgen.ThirdFragment"
-        android:label="ThirdFragment"
-        tools:layout="@layout/fragment_third"/>
+        android:name="com.example.tripgen.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map"/>
 </navigation>

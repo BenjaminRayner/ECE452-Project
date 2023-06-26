@@ -6,38 +6,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.tripgen.databinding.FragmentThirdBinding;
-import com.google.android.gms.maps.CameraUpdate;
+import com.example.tripgen.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.libraries.places.api.net.FetchPlaceRequest;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
-public class ThirdFragment extends Fragment implements OnMapReadyCallback{
-    private FragmentThirdBinding binding;
+public class MapFragment extends Fragment implements OnMapReadyCallback{
+    private FragmentMapBinding binding;
     private MapView mapView;
     private GoogleMap googleMap;
 
@@ -49,7 +37,7 @@ public class ThirdFragment extends Fragment implements OnMapReadyCallback{
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentThirdBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         //initialize MapView
