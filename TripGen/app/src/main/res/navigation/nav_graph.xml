@@ -25,6 +25,13 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/aiChatFragment"
+        android:name="com.example.tripgen.AIChatFragment"
+        android:label="AI Chat Fragment"
+        tools:layout="@layout/fragment_a_i_chat">
+    </fragment>
     <fragment
         android:id="@+id/TripFragment"
         android:name="com.example.tripgen.TripFragment"
@@ -64,6 +71,9 @@
         <action
             android:id="@+id/action_ItineraryFragment_to_thirdFragment"
             app:destination="@id/thirdFragment" />
+        <action
+            android:id="@+id/action_ItineraryFragment_to_AIChatFragment"
+            app:destination="@id/aiChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/thirdFragment"
