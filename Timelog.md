@@ -11,11 +11,14 @@
 |2023/06/01|          |  4.0  |         |        |       |      | Figma Mockups |
 |2023/06/10|    3.0   |       |         |        |       |      | Android Studio Learning |
 |2023/06/16|          |       |   4.0   |        |  4.0  |      | Android Studio Learning |
+|2023/06/17|          |       |         |   3.0  |       |      | Android Studio Learning |
 |2023/06/13|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D2 meeting |
 |2023/06/15|    0.5   |       |   0.5   |        |  0.5  |      | D2 Deliverable |
 |2023/06/22|          |       |   1.0   |   1.0  |  1.0  |  1.0 | Prototype Demo Discussion |
 |2023/06/24|          |       |   8.0   |        |       |      | Google Maps |
+|2023/06/24|          |       |         |   4.5  |       |      | Trip/date views |
 |2023/06/25|          |       |   8.0   |        |  3.0  |      | Login Screen |
+|2023/06/25|          |       |         |   3.5  |       |      | Itinerary view, trip creation view |
 |2023/06/25|    3.0   |  3.0  |   3.0   |   3.0  |  3.0  |  3.0 | Group merge and conflict fix and debug |
 |2023/06/27|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D3 Meeting |
 |2023/06/29|          |       |   0.5   |        |  0.5  |      | D3 Deliverable |
