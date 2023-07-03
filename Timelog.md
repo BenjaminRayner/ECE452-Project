@@ -21,4 +21,4 @@
 |2023/06/25|          |       |         |   3.5  |       |      | Itinerary view, trip creation view |
 |2023/06/25|    3.0   |  3.0  |   3.0   |   3.0  |  3.0  |  3.0 | Group merge and conflict fix and debug |
 |2023/06/27|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D3 Meeting |
-|2023/06/29|          |       |   0.5   |        |  0.5  |      | D3 Deliverable |
+|2023/06/29|          |       |   0.5   |   0.5  |  0.5  |      | D3 Deliverable |
