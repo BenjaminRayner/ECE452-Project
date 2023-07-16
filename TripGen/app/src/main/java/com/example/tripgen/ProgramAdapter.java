@@ -21,12 +21,13 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     int[] images;
     String[] programName;
     List<String> choosen_location_names  = new ArrayList<String>();
+    List<Integer> choosen_location_images  = new ArrayList<>();
 
     public ProgramAdapter(@NonNull Context context, String[] programName, int[] images){
         super(context, R.layout.single_list_item, R.id.textView1, programName);
         this.context = context;
-        this.images = images;
         this.programName = programName;
+        this.images = images;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -53,6 +54,9 @@ public class ProgramAdapter extends ArrayAdapter<String> {
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Added: "+ programName[position], Toast.LENGTH_SHORT).show();
                 setPlace(programName[position]);
+                choosen_location_names.add(programName[position]);
+                choosen_location_images.add(images[position]);
+                System.out.println(choosen_location_names);
             }
         });
         return singleItem;
@@ -64,5 +68,8 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     }
     public List<String> getPlace(){
         return choosen_location_names;
+    }
+    public List<Integer> getImage(){
+        return choosen_location_images;
     }
 }
