@@ -17,7 +17,7 @@
 |2023/06/22|          |       |   1.0   |   1.0  |  1.0  |  1.0 | Prototype Demo Discussion |
 |2023/06/24|          |       |   8.0   |        |       |      | Google Maps |
 |2023/06/24|          |       |         |   4.5  |       |      | Trip/date views |
-|2023/06/25|          |       |   8.0   |        |  3.0  |      | Login Screen |
+|2023/06/25|          |       |         |        |  4.0  |      | Login Screen |
 |2023/06/25|          |       |         |   3.5  |       |  4.0 | Itinerary view, trip creation view |
 |2023/06/25|    3.0   |  3.0  |   3.0   |   3.0  |  3.0  |  3.0 | Group merge and conflict fix and debug |
 |2023/06/27|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D3 Meeting |
