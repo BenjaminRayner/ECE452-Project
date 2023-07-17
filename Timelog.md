@@ -15,6 +15,7 @@
 |2023/06/13|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D2 meeting |
 |2023/06/15|    0.5   |       |   0.5   |        |  0.5  |  0.5 | D2 Deliverable |
 |2023/06/22|          |       |   1.0   |   1.0  |  1.0  |  1.0 | Prototype Demo Discussion |
+|2023/06/24|    8.0   |       |         |        |       |      | Initial DB Setup |
 |2023/06/24|          |       |   8.0   |        |       |      | Google Maps |
 |2023/06/24|          |       |         |   4.5  |       |      | Trip/date views |
 |2023/06/25|          |       |         |        |  4.0  |      | Login Screen |
@@ -25,3 +26,5 @@
 |2023/07/11|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D4 Deliverable Meeting|
 |2023/07/13|          |       |   1.0   |        |  1.0  |      | D4 Work|
 |2023/07/14|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | Features Update|
+|2023/07/15|    6.0   |       |         |        |       |      | Log-in + Syncrhonization |
+|2023/07/16|    8.0   |       |         |        |       |      | Permissions and sharing |
