@@ -25,6 +25,8 @@
 |2023/06/29|          |       |   0.5   |   0.5  |  0.5  |  0.5 | D3 Deliverable |
 |2023/07/11|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D4 Deliverable Meeting|
 |2023/07/13|          |       |   1.0   |        |  1.0  |      | D4 Work|
+|2023/07/13|          |       |   5.0   |        |       |      | initial work with google api |
 |2023/07/14|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | Features Update|
 |2023/07/15|    6.0   |       |         |        |       |      | Log-in + Syncrhonization |
+|2023/07/15|          |       |   10.0  |        |       |      | Server logic for connecting activities on map, query activities & return details/picture, nearby activities of user location |
 |2023/07/16|    8.0   |       |         |        |       |      | Permissions and sharing |
