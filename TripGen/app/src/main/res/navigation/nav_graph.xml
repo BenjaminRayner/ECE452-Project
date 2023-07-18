@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/TripFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -25,4 +25,59 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/aiChatFragment"
+        android:name="com.example.tripgen.AIChatFragment"
+        android:label="AI Chat Fragment"
+        tools:layout="@layout/fragment_a_i_chat">
+    </fragment>
+    <fragment
+        android:id="@+id/TripFragment"
+        android:name="com.example.tripgen.TripFragment"
+        android:label="Trip View"
+        tools:layout="@layout/fragment_trip">
+
+        <action
+            android:id="@+id/action_TripFragment_to_DateFragment"
+            app:destination="@id/DateFragment" />
+        <action
+            android:id="@+id/action_TripFragment_to_TripCreationFragment"
+            app:destination="@id/TripCreationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DateFragment"
+        android:name="com.example.tripgen.DateFragment"
+        android:label="Date View"
+        tools:layout="@layout/fragment_date">
+        <action
+            android:id="@+id/action_DateFragment_to_ItineraryFragment"
+            app:destination="@id/ItineraryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TripCreationFragment"
+        android:name="com.example.tripgen.TripCreationFragment"
+        android:label="Trip Creation"
+        tools:layout="@layout/fragment_trip_creation">
+        <action
+            android:id="@+id/action_TripCreationFragment_to_DateFragment"
+            app:destination="@id/DateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ItineraryFragment"
+        android:name="com.example.tripgen.ItineraryFragment"
+        android:label="Daily Itinerary"
+        tools:layout="@layout/fragment_itinerary">
+        <action
+            android:id="@+id/action_ItineraryFragment_to_thirdFragment"
+            app:destination="@id/thirdFragment" />
+        <action
+            android:id="@+id/action_ItineraryFragment_to_AIChatFragment"
+            app:destination="@id/aiChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.example.tripgen.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map"/>
 </navigation>

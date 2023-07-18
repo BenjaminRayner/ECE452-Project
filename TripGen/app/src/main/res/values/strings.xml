@@ -43,4 +43,30 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string-array name="trips">
+        <item>Trip to Toronto</item>
+        <item>Trip to Montreal</item>
+        <item>Trip to Vancouver</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>Monday June 5, 2023</item>
+        <item>Tuesday June 6, 2023</item>
+        <item>Wednesday June 7, 2023</item>
+        <item>Thursday June 8, 2023</item>
+        <item>Friday June 9, 2023</item>
+        <item>Saturday June 10, 2023</item>
+    </string-array>
+
+    <!-- Trip creation-->
+    <string name="title_trip_creation">Trip Title</string>
+    <string name="trip_name_hint">Trip to XYZ</string>
+    <string name="invalid_date">Invalid date range selected</string>
+    <string name="empty_trip_name">Please input a trip name</string>
+    <string name="select_dates">Select Dates</string>
+    <string name="enter_location_to_search">Enter location to search</string>
+    <string name="search">Search</string>
+    <string name="save">Save</string>
+    <string name="enter_notes">Enter Notes</string>
 </resources>
