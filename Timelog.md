@@ -35,3 +35,4 @@
 |2023/07/15|          |       |   10.0  |        |       |      | Server logic for connecting activities on map, query activities & return details/picture, nearby activities of user location |
 |2023/07/15|          |       |         |        |       |  5.0 | Swipe to Delete in Itinerary |
 |2023/07/16|    8.0   |       |         |        |       |      | Permissions and sharing |
+|2023/07/18|    1.5   |  1.5  |   1.5   |   1.5  |  1.5  |  1.5 | D5 Deliverable Meeting |
