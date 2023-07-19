@@ -20,7 +20,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     Context context;
     int[] images;
     String[] programName;
-    List<String> choosen_location_names  = new ArrayList<String>();
+    public List<String> choosen_location_names  = new ArrayList<String>();
     List<Integer> choosen_location_images  = new ArrayList<>();
 
     public ProgramAdapter(@NonNull Context context, String[] programName, int[] images){
@@ -52,10 +52,9 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         singleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Added: "+ programName[position], Toast.LENGTH_SHORT).show();
                 setPlace(programName[position]);
-                choosen_location_names.add(programName[position]);
-                choosen_location_images.add(images[position]);
+                //choosen_location_names.add(programName[position]);
+                //choosen_location_images.add(images[position]);
                 System.out.println(choosen_location_names);
             }
         });

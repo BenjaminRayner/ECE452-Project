@@ -65,6 +65,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return titleList.size();
     }
 
+    public void removeItem(int index) {
+        titleList.remove(index);
+        //imageList.remove(index);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
@@ -83,7 +88,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(), titleList.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(view.getContext(), titleList.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
         }
     }
 }

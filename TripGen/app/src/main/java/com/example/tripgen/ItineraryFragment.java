@@ -50,12 +50,14 @@ public class ItineraryFragment extends Fragment {
     int [] location_images = {R.drawable.cn_tower, R.drawable.casa_loma, R.drawable.rom, R.drawable.ripleys};
 
     LinearLayout linearLayout;
-    List<String> choosen_location_names  = new ArrayList<String>();
 
-    List<Integer> choosen_location_images = new ArrayList<Integer>();
+//    List<String> choosen_location_names  = new ArrayList<String>();
+//
+//    List<Integer> choosen_location_images = new ArrayList<Integer>();
 
-    RecyclerViewAdapter adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, choosen_location_names, choosen_location_images);
+    RecyclerViewAdapter adapter1;
 
+    ProgramAdapter programAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,15 +71,11 @@ public class ItineraryFragment extends Fragment {
 
 
         ListView listViewMenu = (ListView) view.findViewById(R.id.listViewChoose);
-        ProgramAdapter programAdapter = new ProgramAdapter(getActivity(), location_names, location_images);
+        programAdapter = new ProgramAdapter(getActivity(), location_names, location_images);
         listViewMenu.setAdapter(programAdapter);
-        choosen_location_names = programAdapter.getPlace();
-        choosen_location_images = programAdapter.getImage();
 
         RecyclerView listViewChoosen = (RecyclerView) view.findViewById(R.id.list_view_display);
-        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, choosen_location_names, choosen_location_images);
-//        ListView listViewChoosen = (ListView) view.findViewById(R.id.list_view_display);
-//        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, programAdapter.getPlace());
+        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, programAdapter.getImage());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listViewChoosen.setLayoutManager(linearLayoutManager);
         listViewChoosen.setAdapter(adapter1);
@@ -118,33 +116,15 @@ public class ItineraryFragment extends Fragment {
             }
         });
 
-
-//        listViewChoosen.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                NavHostFragment.findNavController(ItineraryFragment.this)
-//                        .navigate(R.id.action_ItineraryFragment_to_thirdFragment);
-//            }
-//        });
-//        //Remove list item when held down
-//        listViewChoosen.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get(position)).removeValue();
-//                return false;
-//            }
-//        });
-
         return view;
     }
-
+    //drag and drop
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
-            Collections.swap(choosen_location_names, fromPosition, toPosition);
+            Collections.swap(programAdapter.choosen_location_names, fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
             return false;
         }
@@ -165,8 +145,9 @@ public class ItineraryFragment extends Fragment {
 //            Snackbar snackbar = Snackbar.make(, "Item Deleted", Snackbar.LENGTH_LONG);
 //            snackbar.show();
 
-            choosen_location_names.remove(viewHolder.getAdapterPosition());
-            //FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get(viewHolder.getAdapterPosition())).removeValue();
+
+            FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get(viewHolder.getAdapterPosition())).removeValue();
+            //programAdapter.choosen_location_names.remove(viewHolder.getAdapterPosition());
             adapter1.notifyDataSetChanged();
         }
     };
