@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/LoginFragment">
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.example.trip_gen.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_LoginFragment_to_TripListFragment"
+            app:destination="@id/TripListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TripListFragment"
+        android:name="com.example.trip_gen.TripListFragment"
+        android:label="Trip List"
+        tools:layout="@layout/fragment_trip_list">
+        <action
+            android:id="@+id/action_TripListFragment_to_TripFragment"
+            app:destination="@id/TripFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TripFragment"
+        android:name="com.example.trip_gen.TripFragment"
+        android:label="Trip"
+        tools:layout="@layout/fragment_trip">
+        <argument
+            android:name="documentID"
+            app:argType="string" />
+    </fragment>
+</navigation>
