@@ -1,12 +1,19 @@
 package com.example.tripgen;
 
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +29,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     String[] programName;
     public List<String> choosen_location_names  = new ArrayList<String>();
     List<Integer> choosen_location_images  = new ArrayList<>();
+    private int startTimeHour, startTimeMin, endTimeHour, endTimeMin;
 
     public ProgramAdapter(@NonNull Context context, String[] programName, int[] images){
         super(context, R.layout.single_list_item, R.id.textView1, programName);
@@ -52,9 +60,30 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         singleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPlace(programName[position]);
-                //choosen_location_names.add(programName[position]);
-                //choosen_location_images.add(images[position]);
+                // Start Time dialog
+                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        startTimeHour = hourOfDay;
+                        startTimeMin = minute;
+                        // End Time dialog
+                        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                endTimeHour = hourOfDay;
+                                endTimeMin = minute;
+                                // add activity to itinerary
+                                setPlace(programName[position]);
+                            }
+                        };
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);
+                        timePickerDialog.setTitle("Select End Time");
+                        timePickerDialog.show();
+                    }
+                };
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);
+                timePickerDialog.setTitle("Select Start Time");
+                timePickerDialog.show();
                 System.out.println(choosen_location_names);
             }
         });

@@ -124,6 +124,7 @@ public class ItineraryFragment extends Fragment {
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
+            //add Firebase swap
             Collections.swap(programAdapter.choosen_location_names, fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
             return false;
@@ -142,8 +143,8 @@ public class ItineraryFragment extends Fragment {
         }
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction){
-//            Snackbar snackbar = Snackbar.make(, "Item Deleted", Snackbar.LENGTH_LONG);
-//            snackbar.show();
+            Snackbar snackbar = Snackbar.make(getView(), "Item Deleted", Snackbar.LENGTH_LONG);
+            snackbar.show();
 
 
             FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get(viewHolder.getAdapterPosition())).removeValue();
