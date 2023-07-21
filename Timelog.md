@@ -36,3 +36,4 @@
 |2023/07/15|          |       |         |        |       |  5.0 | Swipe to Delete in Itinerary |
 |2023/07/16|    8.0   |       |         |        |       |      | Permissions and sharing |
 |2023/07/18|    1.5   |  1.5  |   1.5   |   1.5  |  1.5  |  1.5 | D5 Deliverable Meeting |
+|2023/07/20|          |       |         |        |       |  2.0 | Add start/end time to activities |
