@@ -30,7 +30,8 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     public List<String> choosen_location_names  = new ArrayList<String>();
     List<Integer> choosen_location_images  = new ArrayList<>();
     private int startTimeHour, startTimeMin, endTimeHour, endTimeMin;
-
+    private String name;
+    private int image;
     public ProgramAdapter(@NonNull Context context, String[] programName, int[] images){
         super(context, R.layout.single_list_item, R.id.textView1, programName);
         this.context = context;
@@ -74,6 +75,8 @@ public class ProgramAdapter extends ArrayAdapter<String> {
                                 endTimeMin = minute;
                                 // add activity to itinerary
                                 setPlace(programName[position]);
+                                name = programName[position];
+                                image = images[position];
                             }
                         };
                         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);
@@ -94,10 +97,28 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         Toast.makeText(getContext(), "Place: " + name + " added to itinerary", Toast.LENGTH_SHORT).show();
         FirebaseDatabase.getInstance().getReference().child("Places").child(name).setValue(true);
     }
-    public List<String> getPlace(){
+    public List<String> getPlacesList(){
         return choosen_location_names;
     }
-    public List<Integer> getImage(){
+    public String getPlaceName(){
+        return name;
+    }
+    public int getPlaceImage() {
+        return image;
+    }
+    public int getStartTimeHour(){
+        return startTimeHour;
+    }
+    public int getStartTimeMin(){
+        return startTimeMin;
+    }
+    public int getEndTimeHour(){
+        return endTimeHour;
+    }
+    public int getEndTimeMin(){
+        return endTimeMin;
+    }
+    public List<Integer> getImageList(){
         return choosen_location_images;
     }
 }

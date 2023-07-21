@@ -40,9 +40,9 @@ public class ItineraryFragment extends Fragment {
 
     private FragmentItineraryBinding binding;
     private static final Event[] EVENTS = {
-            new Event(R.drawable.cn_tower, "Event 1", "Description 1", "1:00 PM", "2:00 PM"),
-            new Event(R.drawable.cn_tower, "Event 2", "Description 2", "3:00 PM", "5:00 PM"),
-            new Event(R.drawable.cn_tower, "Event 3", "Description 3", "9:00 PM", "10:00 PM")
+//            new Event(R.drawable.cn_tower, "Event 1", "Description 1", "1:00 PM", "2:00 PM"),
+//            new Event(R.drawable.cn_tower, "Event 2", "Description 2", "3:00 PM", "5:00 PM"),
+//            new Event(R.drawable.cn_tower, "Event 3", "Description 3", "9:00 PM", "10:00 PM")
     };
 
     private Event[] events;
@@ -75,7 +75,7 @@ public class ItineraryFragment extends Fragment {
         listViewMenu.setAdapter(programAdapter);
 
         RecyclerView listViewChoosen = (RecyclerView) view.findViewById(R.id.list_view_display);
-        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, programAdapter.getImage());
+        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, programAdapter.getImageList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listViewChoosen.setLayoutManager(linearLayoutManager);
         listViewChoosen.setAdapter(adapter1);
@@ -98,6 +98,12 @@ public class ItineraryFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 programAdapter.choosen_location_names.add(snapshot.getKey());
+                System.out.println(programAdapter.getStartTimeHour());
+                System.out.println(programAdapter.getStartTimeMin());
+                System.out.println(programAdapter.getEndTimeHour());
+                System.out.println(programAdapter.getEndTimeMin());
+                // save this event to firebase
+                Event e = new Event(programAdapter.getPlaceImage(), programAdapter.getPlaceName(),"",programAdapter.getStartTimeHour(), programAdapter.getStartTimeMin(), programAdapter.getEndTimeHour(),programAdapter.getEndTimeMin());
                 adapter1.notifyDataSetChanged();
             }
             @Override
