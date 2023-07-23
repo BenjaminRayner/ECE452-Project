@@ -1,5 +1,6 @@
 package com.example.tripgen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,7 +8,35 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Budget {
+public class Budget implements Serializable {
+    public int getIcon(Category category) {
+        int iconResId;
+        switch (category) {
+            case TRANSPORTATION:
+                iconResId = R.drawable.transportation;
+                break;
+            case ACCOMMODATION:
+                iconResId = R.drawable.accommodation;
+                break;
+            case FOOD:
+                iconResId = R.drawable.food;
+                break;
+            case ACTIVITIES:
+                iconResId = R.drawable.activity;
+                break;
+            default:
+                // If the category is not found, use a default icon resource
+                iconResId = R.drawable.transportation;
+                break;
+        }
+        return iconResId;
+
+    }
+
+    public String getTripID() {
+        return trip_ID;
+    }
+
     public enum Category {
         TRANSPORTATION,
         ACCOMMODATION,
@@ -17,33 +46,37 @@ public class Budget {
 
     private Map<String, List<Expense>> activityExpenseMap;
     private Map<String, CategoryData> categoryDataMap;
+    private String trip_ID;
 
-    public Budget(double transportationBudget, double accommodationBudget, double foodBudget, double activitiesBudget) {
+    public Budget(String trip_ID, double transportationBudget, double accommodationBudget, double foodBudget, double activitiesBudget) {
+        this.trip_ID = trip_ID;
         activityExpenseMap = new HashMap<>();
         categoryDataMap = new HashMap<>();
 
-        initializeCategory(Category.TRANSPORTATION.name(), transportationBudget);
-        initializeCategory(Category.ACCOMMODATION.name(), accommodationBudget);
-        initializeCategory(Category.FOOD.name(), foodBudget);
-        initializeCategory(Category.ACTIVITIES.name(), activitiesBudget);
+        initializeCategory(Category.TRANSPORTATION, transportationBudget);
+        initializeCategory(Category.ACCOMMODATION, accommodationBudget);
+        initializeCategory(Category.FOOD, foodBudget);
+        initializeCategory(Category.ACTIVITIES, activitiesBudget);
     }
 
-    private void initializeCategory(String category, double budget) {
+
+
+    private void initializeCategory(Category category, double budget) {
         CategoryData categoryData = new CategoryData(budget);
-        categoryDataMap.put(category, categoryData);
+        categoryDataMap.put(category.name(), categoryData);
     }
 
-    public void setBudget(String category, double budget) {
+    public void setBudget(Category category, double budget) {
         CategoryData categoryData = getCategoryData(category);
         categoryData.setBudget(budget);
     }
 
-    public double getBudget(String category) {
+    public double getBudget(Category category) {
         CategoryData categoryData = getCategoryData(category);
         return categoryData.getBudget();
     }
 
-    public double getTotal(String category) {
+    public double getTotal(Category category) {
         CategoryData categoryData = getCategoryData(category);
         return categoryData.getTotal();
     }
@@ -77,11 +110,11 @@ public class Budget {
         return activityExpenseMap.getOrDefault(activityId, Collections.emptyList());
     }
 
-    private CategoryData getCategoryData(String category) {
-        return categoryDataMap.get(category);
+    private CategoryData getCategoryData(Category category) {
+        return categoryDataMap.get(category.name());
     }
 
-    public class CategoryData {
+    public class CategoryData implements Serializable {
         private double budget;
         private double total;
 
@@ -108,18 +141,18 @@ public class Budget {
     }
 
 
-    public static class Expense {
-        private String category;
+    public static class Expense implements Serializable {
+        private Category category;
         private double amount;
         private final String attachedActivity;
 
-        public Expense(String category, double amount, String attachedActivity) {
+        public Expense(Category category, double amount, String attachedActivity) {
             this.category = category;
             this.amount = amount;
             this.attachedActivity = attachedActivity;
         }
 
-        public String getCategory() {
+        public Category getCategory() {
             return category;
         }
 

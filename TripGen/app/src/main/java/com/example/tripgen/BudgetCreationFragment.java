@@ -9,17 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tripgen.databinding.FragmentBudgetCreationBinding;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.google.android.material.slider.Slider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +31,6 @@ public class BudgetCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentBudgetCreationBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-        budgetViewModel = new ViewModelProvider(this).get(BudgetViewModel.class);
 
         PieChart pieChart = binding.categoryDistChart;
         pieChart.getDescription().setEnabled(false);
@@ -66,32 +62,45 @@ public class BudgetCreationFragment extends Fragment {
             });
         }
 
+        budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
+        budgetViewModel.setContext(getContext());
+
+        binding.budgetCreationButton.setOnClickListener(v -> {
+            float transportationBudget = parse_value(binding.transportationEditText);
+            float accommodationBudget = parse_value(binding.accommodationEditText);
+            float activityBudget = parse_value(binding.activityEditText);
+            float foodBudget = parse_value(binding.foodEditText);
+
+
+            budgetViewModel.setBudget("Test1", transportationBudget, accommodationBudget, activityBudget, foodBudget);
+
+            NavHostFragment.findNavController(BudgetCreationFragment.this)
+                    .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
+
+        });
+
+
+
         return view;
     }
 
+    private float parse_value(EditText textObject) {
+        String budgetText = textObject.getText().toString();
+
+        float budget = 0f;
+        if (!budgetText.isEmpty()) {
+            budget = Float.parseFloat(budgetText);
+        }
+
+        return budget;
+    }
+
     private void updatePieChart() {
-        String transportationBudgetText = binding.transportationEditText.getText().toString();
-        String accommodationBudgetText = binding.accommodationEditText.getText().toString();
-        String activityBudgetText = binding.activityEditText.getText().toString();
-        String foodBudgetText = binding.foodEditText.getText().toString();
 
-        float transportationBudget = 0f;
-        float accommodationBudget = 0f;
-        float activityBudget = 0f;
-        float foodBudget = 0f;
-
-        if (!transportationBudgetText.isEmpty()) {
-            transportationBudget = Float.parseFloat(transportationBudgetText);
-        }
-        if (!accommodationBudgetText.isEmpty()) {
-            accommodationBudget = Float.parseFloat(accommodationBudgetText);
-        }
-        if (!activityBudgetText.isEmpty()) {
-            activityBudget = Float.parseFloat(activityBudgetText);
-        }
-        if (!foodBudgetText.isEmpty()) {
-            foodBudget = Float.parseFloat(foodBudgetText);
-        }
+        float transportationBudget = parse_value(binding.transportationEditText);
+        float accommodationBudget = parse_value(binding.accommodationEditText);
+        float activityBudget = parse_value(binding.activityEditText);
+        float foodBudget = parse_value(binding.foodEditText);
 
         List<PieEntry> entries = new ArrayList<>();
         entries.add(new PieEntry(transportationBudget, "Transportation"));

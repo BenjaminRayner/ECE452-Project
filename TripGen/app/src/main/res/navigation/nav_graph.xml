@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/budgetCreationFragment">
+    app:startDestination="@id/BudgetSummaryFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_TripCreationFragment_to_DateFragment"
             app:destination="@id/DateFragment" />
+        <action
+            android:id="@+id/action_TripCreationFragment_to_budgetCreationFragment"
+            app:destination="@id/BudgetCreationFragment" />
     </fragment>
     <fragment
         android:id="@+id/ItineraryFragment"
@@ -86,8 +89,17 @@
         android:label="Budget"
         tools:layout="@layout/fragment_budget"/>
     <fragment
-        android:id="@+id/budgetCreationFragment"
+        android:id="@+id/BudgetCreationFragment"
         android:name="com.example.tripgen.BudgetCreationFragment"
         android:label="Budget"
-        tools:layout="@layout/fragment_budget_creation"/>
+        tools:layout="@layout/fragment_budget_creation">
+        <action
+            android:id="@+id/action_BudgetCreationFragment_to_DateFragment"
+            app:destination="@id/DateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/BudgetSummaryFragment"
+        android:name="com.example.tripgen.BudgetSummaryFragment"
+        android:label="Budget"
+        tools:layout="@layout/fragment_budget_summary"/>
 </navigation>

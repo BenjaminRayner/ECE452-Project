@@ -36,6 +36,7 @@
         android:value="50"
         android:valueFrom="0"
         android:valueTo="100"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,6 +60,7 @@
         android:value="50"
         android:valueFrom="0"
         android:valueTo="100"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transportationEditText" />
@@ -79,6 +81,7 @@
         android:value="50"
         android:valueFrom="0"
         android:valueTo="100"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accommodationEditText" />
@@ -99,12 +102,13 @@
         android:value="50"
         android:valueFrom="0"
         android:valueTo="100"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityEditText" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/budgetCreationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/createBudgetButton"
