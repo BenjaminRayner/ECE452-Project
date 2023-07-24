@@ -2,6 +2,7 @@ package com.example.tripgen;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripgen.databinding.BudgetCategoryBinding;
+
+import java.util.Set;
 
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -23,6 +26,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.budgetViewModel = budgetViewModel;
         this.context = context;
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(Budget.Category category);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -63,6 +77,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.binding.categoryIcon.setImageResource(budgetViewModel.getIcon(category));
         setCategoryProgress(holder.binding.categoryBar, category);
         setBudgetAmounts(holder.binding.budgetText, category);
+
+        // Set click listener for the itemView
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(category);
+                }
+            }
+        });
+
     }
 
 

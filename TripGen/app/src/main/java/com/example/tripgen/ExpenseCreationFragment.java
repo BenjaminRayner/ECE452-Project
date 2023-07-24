@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tripgen.databinding.FragmentExpenseCreationBinding;
@@ -55,14 +56,16 @@ public class ExpenseCreationFragment extends Fragment {
             binding.submitExpenseButton.setText("Update Expense");
 
             binding.deleteExpenseButton.setEnabled(true);
+            binding.deleteExpenseButton.setVisibility(View.VISIBLE);
         } else {
             binding.deleteExpenseButton.setEnabled(false);
+            binding.deleteExpenseButton.setVisibility(View.GONE);
         }
 
         binding.deleteExpenseButton.setOnClickListener(v -> {
             budgetViewModel.removeExpense(selectedExpense);
-            NavHostFragment.findNavController(ExpenseCreationFragment.this)
-                    .navigate(R.id.action_ExpenseCreationFragment_to_ExpenseViewFragment);
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.popBackStack();
         });
 
         binding.submitExpenseButton.setOnClickListener(v -> {
@@ -89,15 +92,17 @@ public class ExpenseCreationFragment extends Fragment {
 
             Budget.Category category = Budget.Category.values()[binding.expenseCategorySpinner.getSelectedItemPosition()];
 
+            // Updating expense
             if (selectedExpense != null) {
                 selectedExpense = budgetViewModel.updateExpense(selectedExpense, amount, category);
+
             } else {
                 Budget.Expense expense = new Budget.Expense(category, amount, activityID);
                 budgetViewModel.addExpense(expense);
             }
 
-//            NavHostFragment.findNavController(ExpenseCreationFragment.this)
-//                    .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.popBackStack();
 
         });
 

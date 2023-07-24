@@ -4,17 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripgen.databinding.FragmentBudgetSummaryBinding;
 
 
-public class BudgetSummaryFragment extends Fragment {
+public class BudgetSummaryFragment extends Fragment implements CategoryAdapter.OnItemClickListener{
 
     private FragmentBudgetSummaryBinding binding;
 
@@ -26,23 +29,43 @@ public class BudgetSummaryFragment extends Fragment {
         BudgetViewModel budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
         budgetViewModel.setContext(getContext());
 
+
+        //TODO: Remove static budget link
+        budgetViewModel.loadBudget("Test1");
+
         // Initialize the RecyclerView and set its adapter
         RecyclerView recyclerView = binding.categoriesRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(getContext(), budgetViewModel);
+        categoryAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(categoryAdapter);
 
         // Observe the budgetLiveData
-        budgetViewModel.getBudgetLiveData().observe(getViewLifecycleOwner(), new Observer<Budget>() {
-            @Override
-            public void onChanged(Budget newBudgetValue) {
-                // Update the UI with the new budget value
-                // For example, update the adapter or any other UI elements you want
-                categoryAdapter.notifyDataSetChanged();
-            }
+        budgetViewModel.getBudgetLiveData().observe(getViewLifecycleOwner(), newBudgetValue -> {
+            categoryAdapter.notifyDataSetChanged();
         });
 
         return view;
+
+    }
+
+    @Override
+    public void onItemClick(Budget.Category category) {
+        NavController navController = NavHostFragment.findNavController(this);
+        int currentDestinationId = navController.getCurrentDestination().getId();
+
+        int actionId;
+        if (currentDestinationId == R.id.DateFragment) {
+            actionId = R.id.action_DateFragment_to_BudgetCreationFragment;
+        } else if (currentDestinationId == R.id.ExpenseViewFragment) {
+            actionId = R.id.action_ExpenseViewFragment_to_BudgetCreationFragment;
+        } else if (currentDestinationId == R.id.ExpenseCreationFragment) {
+            actionId = R.id.action_ExpenseCreationFragment_to_BudgetCreationFragment;
+        } else {
+            return;
+        }
+
+        navController.navigate(actionId);
 
     }
 
@@ -51,4 +74,5 @@ public class BudgetSummaryFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

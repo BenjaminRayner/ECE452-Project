@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Budget implements Serializable {
+public class Budget {
     public enum Category {
         TRANSPORTATION("Transportation", R.drawable.transportation),
         ACCOMMODATION("Accommodation", R.drawable.accommodation),
@@ -31,7 +31,7 @@ public class Budget implements Serializable {
     private String trip_ID;
     private Map<String, List<Expense>> activityExpenseMap;
     private Map<String, CategoryData> categoryDataMap;
-    public Budget(String trip_ID, double transportationBudget, double accommodationBudget, double foodBudget, double activitiesBudget) {
+    public Budget(String trip_ID, int transportationBudget, int accommodationBudget, int foodBudget, int activitiesBudget) {
         this.trip_ID = trip_ID;
         activityExpenseMap = new HashMap<>();
         categoryDataMap = new HashMap<>();
@@ -42,7 +42,7 @@ public class Budget implements Serializable {
         initializeCategory(Category.ACTIVITIES, activitiesBudget);
     }
 
-    private void initializeCategory(Category category, double budget) {
+    private void initializeCategory(Category category, int budget) {
         CategoryData categoryData = new CategoryData(budget);
         categoryDataMap.put(category.toString(), categoryData);
     }
@@ -55,7 +55,7 @@ public class Budget implements Serializable {
         return trip_ID;
     }
 
-    public void setBudget(Category category, double budget) {
+    public void setBudget(Category category, int budget) {
         CategoryData categoryData = getCategoryData(category);
         categoryData.setBudget(budget);
     }
@@ -111,20 +111,20 @@ public class Budget implements Serializable {
         return categoryDataMap.get(category.toString());
     }
 
-    public class CategoryData implements Serializable {
-        private double budget;
+    public class CategoryData {
+        private int budget;
         private double total;
 
-        public CategoryData(double budget) {
+        public CategoryData(int budget) {
             this.budget = budget;
             this.total = 0;
         }
 
-        public double getBudget() {
+        public int getBudget() {
             return budget;
         }
 
-        public void setBudget(double budget) {
+        public void setBudget(int budget) {
             this.budget = budget;
         }
 
@@ -138,7 +138,7 @@ public class Budget implements Serializable {
     }
 
 
-    public static class Expense implements Serializable {
+    public static class Expense implements Serializable{
         private Category category;
         private double amount;
         private final String attachedActivity;

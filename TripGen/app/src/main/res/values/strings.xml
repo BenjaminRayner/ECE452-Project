@@ -76,4 +76,5 @@
     <string name="foodCategory">Food</string>
     <string name="accommodationCategory">Accommodation</string>
     <string name="createBudgetButton">Create Budget</string>
+    <string name="updateBudgetButton">Update Budget</string>
 </resources>

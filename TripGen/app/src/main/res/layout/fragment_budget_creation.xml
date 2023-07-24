@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     tools:context=".BudgetCreationFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Set Budget Parameters" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="Set Budget Parameters" />-->
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/categoryDistChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@id/transportationEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,89 +26,104 @@
 
     <TextView
         android:id="@+id/transportationLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/transportationCategory"
-        app:layout_constraintBottom_toTopOf="@+id/transportationEditText"
-        app:layout_constraintStart_toStartOf="@+id/transportationEditText" />
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/transportationEditText"
+        app:layout_constraintEnd_toEndOf="@+id/accommodationLabel"
+        app:layout_constraintStart_toStartOf="@+id/accommodationLabel"
+        app:layout_constraintTop_toTopOf="@+id/transportationEditText" />
 
     <EditText
         android:id="@+id/transportationEditText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:value="50"
-        android:valueFrom="0"
-        android:valueTo="100"
+        android:layout_marginStart="16dp"
         android:inputType="number"
+        android:ems="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintStart_toEndOf="@+id/transportationLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.584" />
 
     <TextView
         android:id="@+id/accommodationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/accommodationCategory"
-        app:layout_constraintBottom_toTopOf="@+id/accommodationEditText"
-        app:layout_constraintStart_toStartOf="@+id/accommodationEditText" />
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accommodationEditText"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/accommodationEditText"
+        app:layout_constraintVertical_bias="0.608" />
 
     <EditText
         android:id="@+id/accommodationEditText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:value="50"
-        android:valueFrom="0"
-        android:valueTo="100"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:inputType="number"
+        android:ems="6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/accommodationLabel"
         app:layout_constraintTop_toBottomOf="@+id/transportationEditText" />
+
 
     <TextView
         android:id="@+id/activityLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/activityCategory"
-        app:layout_constraintBottom_toTopOf="@+id/activityEditText"
-        app:layout_constraintStart_toStartOf="@+id/activityEditText" />
-
-    <EditText
-        android:id="@+id/activityEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:value="50"
-        android:valueFrom="0"
-        android:valueTo="100"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accommodationEditText" />
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityEditText"
+        app:layout_constraintEnd_toEndOf="@+id/accommodationLabel"
+        app:layout_constraintStart_toStartOf="@+id/accommodationLabel"
+        app:layout_constraintTop_toTopOf="@+id/activityEditText" />
 
     <TextView
         android:id="@+id/foodLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/foodCategory"
-        app:layout_constraintBottom_toTopOf="@+id/foodEditText"
-        app:layout_constraintStart_toStartOf="@+id/foodEditText" />
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/foodEditText"
+        app:layout_constraintEnd_toEndOf="@+id/activityLabel"
+        app:layout_constraintStart_toStartOf="@+id/accommodationLabel"
+        app:layout_constraintTop_toTopOf="@+id/foodEditText" />
 
     <EditText
         android:id="@+id/foodEditText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:value="50"
-        android:valueFrom="0"
-        android:valueTo="100"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="6"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityEditText" />
+        app:layout_constraintStart_toEndOf="@+id/foodLabel"
+        app:layout_constraintTop_toBottomOf="@+id/accommodationEditText" />
+
+
+    <EditText
+        android:id="@+id/activityEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="6"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toEndOf="@+id/activityLabel"
+        app:layout_constraintTop_toBottomOf="@+id/foodEditText" />
 
     <Button
         android:id="@+id/budgetCreationButton"
@@ -115,7 +133,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/activityEditText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

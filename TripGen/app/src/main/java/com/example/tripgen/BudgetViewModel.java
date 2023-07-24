@@ -7,9 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,9 +25,12 @@ public class BudgetViewModel extends ViewModel {
     private MutableLiveData<Budget> budgetLiveData;
     private Context context;
     private Observer<Budget> budgetObserver;
+    private Gson gson;
+
 
     public BudgetViewModel() {
         budgetLiveData = new MutableLiveData<>();
+        gson = new Gson();
     }
 
     public void setContext(Context context) {
@@ -50,11 +57,9 @@ public class BudgetViewModel extends ViewModel {
 
     public void persistBudget() {
         Budget budget = getLiveBudget();
-        String fileName = budget.getTripID() + ".ser";
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(Files.newOutputStream(new File(context.getFilesDir(), fileName).toPath()))) {
-            outputStream.writeObject(budget);
-            outputStream.writeObject(budget);
-            outputStream.writeObject(budget);
+        String fileName = budget.getTripID() + ".json";
+        try (FileWriter writer = new FileWriter(new File(context.getFilesDir(), fileName))) {
+            gson.toJson(budget, writer);
         } catch (IOException e) {
             e.printStackTrace();
             // Handle the exception
@@ -62,11 +67,11 @@ public class BudgetViewModel extends ViewModel {
     }
 
     public void loadBudget(String trip_ID) {
-        String filePath = context.getFilesDir() + "/" + trip_ID + ".ser";
+        String filePath = context.getFilesDir() + "/" + trip_ID + ".json";
         Budget budget = null;
-        try (ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(Paths.get(filePath)))) {
-            budget = (Budget) inputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        try (FileReader reader = new FileReader(filePath)) {
+            budget = gson.fromJson(reader, Budget.class);
+        } catch (IOException e) {
             e.printStackTrace();
             // Handle the exceptions
         }
@@ -76,7 +81,11 @@ public class BudgetViewModel extends ViewModel {
         createObserver();
     }
 
-    public void setBudget(String trip_ID, double transportationBudget, double accommodationBudget, double foodBudget, double activitiesBudget) {
+    public boolean validBudget() {
+        return budgetLiveData.getValue() != null;
+    }
+
+    public void createBudget(String trip_ID, int transportationBudget, int accommodationBudget, int foodBudget, int activitiesBudget) {
         Budget budget = new Budget(trip_ID, transportationBudget, accommodationBudget, foodBudget, activitiesBudget);
         removeObserver();
         budgetLiveData.setValue(budget);
@@ -134,5 +143,17 @@ public class BudgetViewModel extends ViewModel {
     private Budget getLiveBudget() {
         if (budgetLiveData.getValue() == null) throw new IllegalStateException("Budget is null");
         return budgetLiveData.getValue();
+    }
+
+
+    public void updateBudget(int transportationBudget, int accommodationBudget, int activityBudget, int foodBudget) {
+        Budget budget = getLiveBudget();
+
+        budget.setBudget(Budget.Category.TRANSPORTATION, transportationBudget);
+        budget.setBudget(Budget.Category.ACCOMMODATION, accommodationBudget);
+        budget.setBudget(Budget.Category.ACTIVITIES, activityBudget);
+        budget.setBudget(Budget.Category.FOOD, foodBudget);
+
+        budgetLiveData.setValue(budget);
     }
 }
