@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/casa_loma"
-        android:layout_margin="10dp"/>
+        android:layout_width="88dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        app:srcCompat="@drawable/casa_loma" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,11 +23,19 @@
             android:text="Text"
             android:layout_marginTop="5dp"
             android:textSize="18sp"/>
+
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:text="Description"
-            android:textSize="13sp"/>
+            android:text="Budget:"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ratings:"
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>
