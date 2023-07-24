@@ -55,6 +55,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.libraries.places:places:2.4.0'
+    implementation 'com.theokanning.openai-gpt3-java:service:0.14.0'
     implementation 'com.android.volley:volley:1.2.1'
 
 }
