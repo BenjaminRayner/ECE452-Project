@@ -35,22 +35,19 @@ public class ExpenseViewFragment extends Fragment implements AdapterView.OnItemC
         binding.listView.setOnItemClickListener(this);
 
 
-        //TODO: Remove static create budget
         //TODO: Remove static activity ID
         activityID = "Activity1";
-//        budgetViewModel.setBudget("Test1", 120, 54, 34, 2);
-//        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.ACCOMMODATION, 12, "Activity1"));
-//        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.TRANSPORTATION, 123, "Activity1"));
-//        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.FOOD, 1.10, "Activity1"));
-//        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.ACTIVITIES, 2.18, "Activity1"));
         renderExpenses();
 
 
         binding.newExpenseFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle args = new Bundle();
+                args.putString("activityID", activityID);
+
                 NavHostFragment.findNavController(ExpenseViewFragment.this)
-                        .navigate(R.id.action_ExpenseViewFragment_to_ExpenseCreationFragment);
+                        .navigate(R.id.action_ExpenseViewFragment_to_ExpenseCreationFragment, args);
             }
         });
 

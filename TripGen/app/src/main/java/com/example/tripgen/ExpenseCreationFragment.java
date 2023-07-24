@@ -23,13 +23,19 @@ public class ExpenseCreationFragment extends Fragment {
     private FragmentExpenseCreationBinding binding;
     private BudgetViewModel budgetViewModel;
     private Budget.Expense selectedExpense = null;
+    private String activityID = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            selectedExpense = (Budget.Expense) getArguments().getSerializable("selectedExpense");
+        Bundle args = getArguments();
+        if (args != null && args.containsKey("selectedExpense")) {
+            selectedExpense = (Budget.Expense) args.getSerializable("selectedExpense");
+        }
+
+        if (selectedExpense == null && args != null && args.containsKey("activityID")) {
+            activityID = args.getString("activityID");
         }
     }
 
@@ -42,7 +48,6 @@ public class ExpenseCreationFragment extends Fragment {
         //TODO: Remove static activity ID
         budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
         budgetViewModel.setContext(getContext());
-        String activityID = "Activity1";
 
         binding.expenseCategorySpinner.setAdapter(new ArrayAdapter<Budget.Category>(requireContext(), android.R.layout.simple_spinner_item, Budget.Category.values()));
 
@@ -99,9 +104,6 @@ public class ExpenseCreationFragment extends Fragment {
                 Budget.Expense expense = new Budget.Expense(category, amount, activityID);
                 budgetViewModel.addExpense(expense);
             }
-
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.popBackStack();
 
         });
 
