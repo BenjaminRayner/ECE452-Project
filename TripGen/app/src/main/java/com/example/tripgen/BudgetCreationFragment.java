@@ -95,12 +95,11 @@ public class BudgetCreationFragment extends Fragment {
                 NavController navController = NavHostFragment.findNavController(this);
                 navController.popBackStack();
             } else {
+                // TODO: Remove static trip ID
                 budgetViewModel.createBudget("Test1", transportationBudget, accommodationBudget, activityBudget, foodBudget);
                 NavHostFragment.findNavController(BudgetCreationFragment.this)
                         .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
             }
-
-
         });
 
         return view;

@@ -32,15 +32,10 @@ public class ExpenseViewFragment extends Fragment implements AdapterView.OnItemC
         budgetViewModel.setContext(getContext());
 
 
-
         binding.listView.setOnItemClickListener(this);
 
 
-
-
-
         //TODO: Remove static create budget
-        //TODO: Remove static load budget
         //TODO: Remove static activity ID
         activityID = "Activity1";
 //        budgetViewModel.setBudget("Test1", 120, 54, 34, 2);
@@ -48,9 +43,16 @@ public class ExpenseViewFragment extends Fragment implements AdapterView.OnItemC
 //        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.TRANSPORTATION, 123, "Activity1"));
 //        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.FOOD, 1.10, "Activity1"));
 //        budgetViewModel.addExpense(new Budget.Expense(Budget.Category.ACTIVITIES, 2.18, "Activity1"));
-        budgetViewModel.loadBudget("Test1");
         renderExpenses();
 
+
+        binding.newExpenseFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ExpenseViewFragment.this)
+                        .navigate(R.id.action_ExpenseViewFragment_to_ExpenseCreationFragment);
+            }
+        });
 
         return view;
     }
@@ -60,6 +62,8 @@ public class ExpenseViewFragment extends Fragment implements AdapterView.OnItemC
         ExpenseAdapter adapter = new ExpenseAdapter(requireActivity(), expenseList);
         binding.listView.setAdapter(adapter);
     }
+
+
 
     @Override
     public void onResume() {

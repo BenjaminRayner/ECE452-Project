@@ -38,11 +38,10 @@ public class ExpenseCreationFragment extends Fragment {
         binding = FragmentExpenseCreationBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        //TODO: Remove static load budget
+
         //TODO: Remove static activity ID
         budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
         budgetViewModel.setContext(getContext());
-        budgetViewModel.loadBudget("Test1");
         String activityID = "Activity1";
 
         binding.expenseCategorySpinner.setAdapter(new ArrayAdapter<Budget.Category>(requireContext(), android.R.layout.simple_spinner_item, Budget.Category.values()));

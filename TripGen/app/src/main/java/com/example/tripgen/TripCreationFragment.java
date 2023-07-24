@@ -46,7 +46,7 @@ public class TripCreationFragment extends Fragment {
                     Toast.makeText(requireContext(), R.string.empty_trip_name, Toast.LENGTH_SHORT).show();
                 } else {
                     NavHostFragment.findNavController(TripCreationFragment.this)
-                            .navigate(R.id.action_TripCreationFragment_to_DateFragment);
+                            .navigate(R.id.action_TripCreationFragment_to_budgetCreationFragment);
                 }
             });
         });

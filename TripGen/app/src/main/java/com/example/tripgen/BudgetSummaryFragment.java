@@ -29,10 +29,6 @@ public class BudgetSummaryFragment extends Fragment implements CategoryAdapter.O
         BudgetViewModel budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
         budgetViewModel.setContext(getContext());
 
-
-        //TODO: Remove static budget link
-        budgetViewModel.loadBudget("Test1");
-
         // Initialize the RecyclerView and set its adapter
         RecyclerView recyclerView = binding.categoriesRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
