@@ -113,15 +113,18 @@ public class GoogleApi {
     }
 
     //shared
-    public void makeNearbyPlaceRequestToManipulate() {
+    public void makeNearbyPlaceRequestToManipulate(FetchPlaceArrayListCallback callback) {
         makeNearbyPlaceRequest(
                 new FetchPlaceArrayListCallback() {
                     @Override
                     public void onPlaceArrayListFetched(ArrayList<Place> places) {
-                        for (Place place : places) {
-                            Log.i("Place", "Nearby-Place Name: " + place.getName());
-                            Log.i("Place", "Nearby-Place Address: " + place.getAddress());
-                        }
+                        callback.onPlaceArrayListFetched(places);
+//                        for (Place place : places) {
+//
+//
+//                            Log.i("Place", "Nearby-Place Name: " + place.getName());
+//                            Log.i("Place", "Nearby-Place Address: " + place.getAddress());
+//                        }
                         //do all the manipulation of the place info here
                     }
 
@@ -164,23 +167,25 @@ public class GoogleApi {
 //    }
 
     //shared
-    public void getPictureOfLocationToManipulate(String location) {
+    public void getPictureOfLocationToManipulate(String location, FetchPictureCallback callback) {
         getPictureOfLocation(
                 location,
                 new FetchPictureCallback() {
                     @Override
                     public void onPictureFetched(Bitmap bitmap) {
-                        testBitMapInAlertDialog(bitmap);
                         //do something with the image
+                        callback.onPictureFetched(bitmap);
                     }
 
                     @Override
                     public void onFetchFailure(Exception exception) {
                         Log.e("Error", "Exception: " + exception.getMessage());
+                        callback.onFetchFailure(exception);
                     }
                 }
         );
     }
+
 
     //shared
     //Example origin = University of Waterloo

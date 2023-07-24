@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 public class OpenAiApi {
-    OpenAiService service = new OpenAiService("");
+    OpenAiService service = new OpenAiService("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");
 
     public CompletableFuture<List<String>> getRecommendedPlaces(String placeName) {
         return CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,6 @@ public class OpenAiApi {
         });
     }
 
-
     public CompletableFuture<String> getPlaceDetail(String placeName) {
         return CompletableFuture.supplyAsync(() -> {
             List<ChatMessage> messages = new ArrayList<>();
@@ -64,7 +63,6 @@ public class OpenAiApi {
             return result;
         });
     }
-
 
     public List<String> extractPlaces(String chatOutput) {
         List<String> places = new ArrayList<>();
