@@ -71,15 +71,12 @@ public class BudgetCreationFragment extends Fragment {
             float activityBudget = parse_value(binding.activityEditText);
             float foodBudget = parse_value(binding.foodEditText);
 
-
             budgetViewModel.setBudget("Test1", transportationBudget, accommodationBudget, activityBudget, foodBudget);
 
             NavHostFragment.findNavController(BudgetCreationFragment.this)
                     .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
 
         });
-
-
 
         return view;
     }

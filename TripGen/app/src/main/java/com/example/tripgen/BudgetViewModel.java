@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class BudgetViewModel extends ViewModel {
     private MutableLiveData<Budget> budgetLiveData;
@@ -31,6 +32,48 @@ public class BudgetViewModel extends ViewModel {
 
     public LiveData<Budget> getBudgetLiveData() {
         return budgetLiveData;
+    }
+
+    @Override
+    protected void onCleared() {
+        // Remove the observer when the ViewModel is cleared to avoid potential memory leaks
+        removeObserver();
+        super.onCleared();
+    }
+
+    private void removeObserver() {
+        if (budgetObserver != null) {
+            budgetLiveData.removeObserver(budgetObserver);
+            budgetObserver = null;
+        }
+    }
+
+    public void persistBudget() {
+        Budget budget = getLiveBudget();
+        String fileName = budget.getTripID() + ".ser";
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(Files.newOutputStream(new File(context.getFilesDir(), fileName).toPath()))) {
+            outputStream.writeObject(budget);
+            outputStream.writeObject(budget);
+            outputStream.writeObject(budget);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception
+        }
+    }
+
+    public void loadBudget(String trip_ID) {
+        String filePath = context.getFilesDir() + "/" + trip_ID + ".ser";
+        Budget budget = null;
+        try (ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(Paths.get(filePath)))) {
+            budget = (Budget) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Handle the exceptions
+        }
+
+        removeObserver();
+        budgetLiveData.setValue(budget);
+        createObserver();
     }
 
     public void setBudget(String trip_ID, double transportationBudget, double accommodationBudget, double foodBudget, double activitiesBudget) {
@@ -53,69 +96,43 @@ public class BudgetViewModel extends ViewModel {
     }
 
     public void addExpense(Budget.Expense expense) {
-        Budget budget = budgetLiveData.getValue();
-        if (budget != null) {
-            budget.addExpense(expense);
-            budgetLiveData.setValue(budget);
-        }
-    }
-
-    public void updateExpense(Budget.Expense expense, double amount) {
-        Budget budget = budgetLiveData.getValue();
-        if (budget != null) {
-            budget.updateExpense(expense, amount);
-            budgetLiveData.setValue(budget);
-        }
-    }
-
-    public void loadBudget(String trip_ID) {
-        String filePath = context.getFilesDir() + "/" + trip_ID + ".ser";
-        Budget budget = null;
-        try (ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(Paths.get(filePath)))) {
-            budget = (Budget) inputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            // Handle the exceptions
-        }
-
-        removeObserver();
+        Budget budget = getLiveBudget();
+        budget.addExpense(expense);
         budgetLiveData.setValue(budget);
-        createObserver();
     }
 
-    public void persistBudget() {
-        String fileName = budgetLiveData.getValue().getTripID() + ".ser";
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(Files.newOutputStream(new File(context.getFilesDir(), fileName).toPath()))) {
-            outputStream.writeObject(budgetLiveData.getValue());
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Handle the exception
-        }
+    public Budget.Expense updateExpense(Budget.Expense expense, double amount, Budget.Category category) {
+        Budget budget = getLiveBudget();
+        expense = budget.updateExpense(expense, amount, category);
+        budgetLiveData.setValue(budget);
+
+        return expense;
     }
 
-    @Override
-    protected void onCleared() {
-        // Remove the observer when the ViewModel is cleared to avoid potential memory leaks
-        removeObserver();
-        super.onCleared();
+    public List<Budget.Expense> getExpenses(String activity_ID) {
+        return getLiveBudget().getExpensesForActivity(activity_ID);
     }
 
-    private void removeObserver() {
-        if (budgetObserver != null) {
-            budgetLiveData.removeObserver(budgetObserver);
-            budgetObserver = null;
-        }
-    }
 
     public int getIcon(Budget.Category category) {
-        return budgetLiveData.getValue().getIcon(category);
+        return getLiveBudget().getIcon(category);
+    }
+
+
+    public void removeExpense(Budget.Expense expense) {
+        getLiveBudget().removeExpense(expense);
     }
 
     public double getTotal(Budget.Category category) {
-        return budgetLiveData.getValue().getTotal(category);
+        return getLiveBudget().getTotal(category);
     }
 
     public double getBudget(Budget.Category category) {
-        return budgetLiveData.getValue().getBudget(category);
+        return getLiveBudget().getBudget(category);
+    }
+
+    private Budget getLiveBudget() {
+        if (budgetLiveData.getValue() == null) throw new IllegalStateException("Budget is null");
+        return budgetLiveData.getValue();
     }
 }

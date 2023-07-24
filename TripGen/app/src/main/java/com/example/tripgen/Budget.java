@@ -9,45 +9,28 @@ import java.util.Map;
 
 
 public class Budget implements Serializable {
-    public int getIcon(Category category) {
-        int iconResId;
-        switch (category) {
-            case TRANSPORTATION:
-                iconResId = R.drawable.transportation;
-                break;
-            case ACCOMMODATION:
-                iconResId = R.drawable.accommodation;
-                break;
-            case FOOD:
-                iconResId = R.drawable.food;
-                break;
-            case ACTIVITIES:
-                iconResId = R.drawable.activity;
-                break;
-            default:
-                // If the category is not found, use a default icon resource
-                iconResId = R.drawable.transportation;
-                break;
-        }
-        return iconResId;
-
-    }
-
-    public String getTripID() {
-        return trip_ID;
-    }
-
     public enum Category {
-        TRANSPORTATION,
-        ACCOMMODATION,
-        FOOD,
-        ACTIVITIES
-    }
+        TRANSPORTATION("Transportation", R.drawable.transportation),
+        ACCOMMODATION("Accommodation", R.drawable.accommodation),
+        FOOD("Food", R.drawable.food),
+        ACTIVITIES("Activites", R.drawable.activity);
 
+        private String friendlyName;
+
+        private int iconResId;
+        private Category(String friendlyName, int iconResId){
+            this.friendlyName = friendlyName;
+            this.iconResId = iconResId;
+        }
+
+        @Override public String toString(){
+            return friendlyName;
+        }
+
+    }
+    private String trip_ID;
     private Map<String, List<Expense>> activityExpenseMap;
     private Map<String, CategoryData> categoryDataMap;
-    private String trip_ID;
-
     public Budget(String trip_ID, double transportationBudget, double accommodationBudget, double foodBudget, double activitiesBudget) {
         this.trip_ID = trip_ID;
         activityExpenseMap = new HashMap<>();
@@ -59,11 +42,17 @@ public class Budget implements Serializable {
         initializeCategory(Category.ACTIVITIES, activitiesBudget);
     }
 
-
-
     private void initializeCategory(Category category, double budget) {
         CategoryData categoryData = new CategoryData(budget);
-        categoryDataMap.put(category.name(), categoryData);
+        categoryDataMap.put(category.toString(), categoryData);
+    }
+
+    public int getIcon(Category category) {
+        return category.iconResId;
+    }
+
+    public String getTripID() {
+        return trip_ID;
     }
 
     public void setBudget(Category category, double budget) {
@@ -89,12 +78,20 @@ public class Budget implements Serializable {
         categoryData.setTotal(categoryData.getTotal() + expense.getAmount());
     }
 
-    public void updateExpense(Expense expense, double amount) {
-        double difference = amount - expense.getAmount();
-        expense.setAmount(amount);
-
+    public Expense updateExpense(Expense expense, double amount, Category category) {
+        // Remove from old
         CategoryData categoryData = getCategoryData(expense.getCategory());
-        categoryData.setTotal(categoryData.getTotal() + difference);
+        categoryData.setTotal(categoryData.getTotal() - expense.getAmount());
+
+        // Update fields
+        categoryData = getCategoryData(category);
+        expense.setAmount(amount);
+        expense.setCategory(category);
+
+        // Add to new
+        categoryData.setTotal(categoryData.getTotal() + expense.getAmount());
+
+        return expense;
     }
 
     public void removeExpense(Expense expense) {
@@ -111,7 +108,7 @@ public class Budget implements Serializable {
     }
 
     private CategoryData getCategoryData(Category category) {
-        return categoryDataMap.get(category.name());
+        return categoryDataMap.get(category.toString());
     }
 
     public class CategoryData implements Serializable {
@@ -166,6 +163,10 @@ public class Budget implements Serializable {
 
         public String getAttachedActivity() {
             return attachedActivity;
+        }
+
+        public void setCategory(Category category) {
+            this.category = category;
         }
     }
 }
