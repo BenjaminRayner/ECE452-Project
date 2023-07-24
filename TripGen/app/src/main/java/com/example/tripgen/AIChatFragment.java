@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class AIChatFragment extends Fragment {
 
@@ -34,6 +35,9 @@ public class AIChatFragment extends Fragment {
     private ArrayList<Message> messages = new ArrayList<>();
     private MessagesAdapter messagesAdapter = new MessagesAdapter(messages);
     private FragmentAIChatBinding binding;
+
+    private int optionSelected;
+
 
     @Override
     public View onCreateView(
@@ -51,11 +55,13 @@ public class AIChatFragment extends Fragment {
 
         // Set reverse layout
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        OpenAiApi chatbot =  new OpenAiApi();
         layoutManager.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(messagesAdapter); // Add this line
 
         tempBot("initial"); // initial bot message
+
 
         binding.sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,13 +70,61 @@ public class AIChatFragment extends Fragment {
                 String userMessage = binding.inputText.getText().toString();
                 //print user message
                 Log.d("user message", userMessage);
-                if(!userMessage.isEmpty()) {
+
+                if(optionSelected == 1){ // Recommended places
+                    Log.d("OptionSelected","1");
+                }
+                if(optionSelected == 2){ // Locate Nearby Attractions (No need to talk to chat gpt)
+                    Log.d("OptionSelected","2");
+                    // call google api to get nearby attractions
+                    return;
+                }
+                if(optionSelected == 3){ // Discover Places
+                    Log.d("OptionSelected","3");
+                }
+                if(!userMessage.isEmpty() && optionSelected == 1) {
                     messages.add(new Message(userMessage,"",null, Message.TYPE_USER));
                     binding.inputText.setText("");
                     messagesAdapter.notifyDataSetChanged();
                     binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                     hideKeyboard(v);
-                    tempBot("country");
+                    chatbot.getRecommendedPlaces(userMessage).thenAccept(placeList -> {
+                        // This code will be executed when the CompletableFuture returned by getPlaceDetails is completed
+                        // You can use the list of places here, for example, you could display it in your app's UI
+                        for (String place : placeList) {
+                            Log.d("OpenAiApi", "Recommended place: " + place);
+                            messages.add(new Message(place,"",null,Message.TYPE_AI));
+                        }
+
+                        // Notify the adapter on the main/UI thread
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                        }
+                    });
+
+                }
+
+                if(!userMessage.isEmpty() && optionSelected == 3) {
+                    messages.add(new Message(userMessage,"",null, Message.TYPE_USER));
+                    binding.inputText.setText("");
+                    messagesAdapter.notifyDataSetChanged();
+                    binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
+                    hideKeyboard(v);
+                    chatbot.getPlaceDetail(userMessage).thenAccept(details -> {
+                        // This code will be executed when the CompletableFuture returned by getPlaceDetails is completed
+                        // You can use the list of places here, for example, you could display it in your app's UI
+
+                        Log.d("OpenAiApi", "Recommended place: " + details);
+                        messages.add(new Message(details,"",null,Message.TYPE_AI));
+
+
+                        // Notify the adapter on the main/UI thread
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                        }
+                    });
                 }
             }
         });
@@ -91,15 +145,17 @@ public class AIChatFragment extends Fragment {
                 public void onOptionClick(int position){
                     Message clickedOption = messages.get(position);
                     //print clicked option
+                    optionSelected = position;
+
 
                     //remove options
-                    Iterator<Message> iter = messages.iterator();
-                    while (iter.hasNext()) {
-                        Message m = iter.next();
-                        if (m.getType() == Message.TYPE_OPTIONS && m != clickedOption) {
-                            iter.remove();
-                        }
-                    }
+//                    Iterator<Message> iter = messages.iterator();
+//                    while (iter.hasNext()) {
+//                        Message m = iter.next();
+//                        if (m.getType() == Message.TYPE_OPTIONS && m != clickedOption) {
+//                            iter.remove();
+//                        }
+//                    }
                     messagesAdapter.notifyDataSetChanged();
                     tempBot("placeToVisit");
 
@@ -129,9 +185,14 @@ public class AIChatFragment extends Fragment {
                     messages.add( new Message("Learn about specific place","",null, Message.TYPE_OPTIONS));
                     messagesAdapter.notifyDataSetChanged();
                 }
-                if(value == "placeToVisit"){
+                if(value == "placeToVisit" && optionSelected == 1){
                     // Enable the keyboard after a delay
                     messages.add(new Message("Please type a city or country name","",null,Message.TYPE_AI));
+                    messagesAdapter.notifyDataSetChanged();
+                }
+                if(value == "placeToVisit" && optionSelected == 3){
+                    // Enable the keyboard after a delay
+                    messages.add(new Message("Please type a question","",null,Message.TYPE_AI));
                     messagesAdapter.notifyDataSetChanged();
                 }
                 if(value == "country" || value == "city"){
