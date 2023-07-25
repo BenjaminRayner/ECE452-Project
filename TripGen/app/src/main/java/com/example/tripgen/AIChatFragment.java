@@ -96,7 +96,18 @@ public class AIChatFragment extends Fragment {
                     messagesAdapter.notifyDataSetChanged();
                     binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                     hideKeyboard(v);
+                    messages.add(new Message("Please give me few seconds while I gather places for you","",null, Message.TYPE_AI));
+                    messagesAdapter.notifyDataSetChanged();
+                    binding.recyclerView.smoothScrollToPosition(messages.size() - 1);
                     chatbot.getRecommendedPlaces(userMessage).thenAccept(placeList -> {
+                        if(placeList.isEmpty()){
+                            messages.add(new Message("I am sorry, I couldn't find any place for the given input","",null, Message.TYPE_AI));
+                            Activity activity = getActivity();
+                            if (activity != null) {
+                                activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                                binding.recyclerView.smoothScrollToPosition(messages.size() - 1);
+                            }
+                        }
                         for (String place : placeList) {
 
 
@@ -110,10 +121,8 @@ public class AIChatFragment extends Fragment {
                                     // Notify the adapter on the main/UI thread
                                     Activity activity = getActivity();
                                     if (activity != null) {
-                                        activity.runOnUiThread(() -> {
-                                            messagesAdapter.notifyDataSetChanged();
-                                            binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
-                                        });
+                                        activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                                        binding.recyclerView.smoothScrollToPosition(messages.size() - 1);
                                     }
                                 }
 
@@ -134,18 +143,32 @@ public class AIChatFragment extends Fragment {
                     messagesAdapter.notifyDataSetChanged();
                     binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                     hideKeyboard(v);
+                    tempBot("AiTyping");
+                    Activity activity = getActivity();
                     chatbot.getPlaceDetail(userMessage).thenAccept(details -> {
-                        // This code will be executed when the CompletableFuture returned by getPlaceDetails is completed
-                        // You can use the list of places here, for example, you could display it in your app's UI
+                        if(details.isEmpty()){
+                            messages.add(new Message("I am sorry, I am not able to answer this question","",null, Message.TYPE_AI));
+                            if (activity != null) {
+                                activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                                binding.recyclerView.smoothScrollToPosition(messages.size() - 1);
+                            }
+                        }
+                        messages.remove(messages.size()-1);
+                        if (activity != null) {
+                            activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                            binding.recyclerView.smoothScrollToPosition(messages.size() - 1);
+                        }
+
 
                         Log.d("OpenAiApi", "Recommended place: " + details);
                         messages.add(new Message(details,"",null,Message.TYPE_AI));
 
 
                         // Notify the adapter on the main/UI thread
-                        Activity activity = getActivity();
+
                         if (activity != null) {
                             activity.runOnUiThread(() -> messagesAdapter.notifyDataSetChanged());
+                            binding.recyclerView.smoothScrollToPosition(messages.size() - 1);
                         }
                     });
                 }
@@ -171,6 +194,10 @@ public class AIChatFragment extends Fragment {
                 optionSelected = position;
 
                 if(position == 2){
+
+                    messages.add(new Message("I am finding nearby attractions for you","",null, Message.TYPE_AI));
+                    messagesAdapter.notifyDataSetChanged();
+                    binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                     googleApi.makeNearbyPlaceRequestToManipulate(new GoogleApi.FetchPlaceArrayListCallback(){
 
                         @Override
@@ -285,21 +312,21 @@ public class AIChatFragment extends Fragment {
                     // Enable the keyboard after a delay
                     messages.add(new Message("Please type a city or country name","",null,Message.TYPE_AI));
                     messagesAdapter.notifyDataSetChanged();
+                    binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                 }
                 if(value == "placeToVisit" && optionSelected == 3){
                     // Enable the keyboard after a delay
                     messages.add(new Message("Please type a question","",null,Message.TYPE_AI));
                     messagesAdapter.notifyDataSetChanged();
+                    binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                 }
-                if(value == "country" || value == "city"){
-                    messages.add(new Message("Here are the recommended destinations, you can click on place to add to itinerary","",null, Message.TYPE_AI));
-//                    messages.add(new Message("CN Tower","Tower in Toronto,Ontario",R.drawable.cn_tower, Message.TYPE_LISTS));
-//                    messages.add(new Message("Casa Loma","Mansion in Toronto,Ontario",R.drawable.casa_loma, Message.TYPE_LISTS));
-//                    messages.add(new Message("Royal Ontario Museum","Museum in Toronto,Ontario",R.drawable.rom,Message.TYPE_LISTS));
+                if(value == "AiTyping"){
+                    messages.add(new Message("AI typing...","",null, Message.TYPE_AI));
                     messagesAdapter.notifyDataSetChanged();
+                    binding.recyclerView.smoothScrollToPosition(messages.size() - 1); // This will automatically scroll to the end when a new message is added
                 }
             }
-        }, 1000); // Delay of 3 seconds
+        }, 500); // Delay of 3 seconds
 
 
     }
