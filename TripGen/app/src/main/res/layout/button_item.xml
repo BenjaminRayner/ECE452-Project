@@ -10,14 +10,13 @@
         android:id="@+id/transportationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Get Distance and Time"
         android:textAllCaps="false" />
     <TextView
         android:id="@+id/transportationTiming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="20min"
         />
 
 
