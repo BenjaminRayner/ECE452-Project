@@ -97,9 +97,10 @@ public class ItineraryFragment extends Fragment {
 
         listViewChoosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+            // TODO: Remove static move to expense view
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 NavHostFragment.findNavController(ItineraryFragment.this)
-                        .navigate(R.id.action_ItineraryFragment_to_thirdFragment);
+                        .navigate(R.id.action_ItineraryFragment_to_ExpenseViewFragment);
             }
         });
         //Remove list item when held down

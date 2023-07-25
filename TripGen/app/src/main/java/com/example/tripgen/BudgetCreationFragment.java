@@ -95,22 +95,22 @@ public class BudgetCreationFragment extends Fragment {
             int foodBudget = parse_value(binding.foodEditText);
             int activityBudget = parse_value(binding.activityEditText);
 
-            // Must be updating budget
-            if (budgetViewModel.validBudget()) {
-                budgetViewModel.updateBudget(transportationBudget, accommodationBudget, activityBudget, foodBudget);
+        // Must be updating budget
+        if (budgetViewModel.validBudget()) {
+            budgetViewModel.updateBudget(transportationBudget, accommodationBudget, activityBudget, foodBudget);
 
-                NavController navController = NavHostFragment.findNavController(this);
-                navController.popBackStack();
-            } else {
-                // TODO: Remove static trip ID
-                budgetViewModel.createBudget("Test1", transportationBudget, accommodationBudget, activityBudget, foodBudget);
-                NavHostFragment.findNavController(BudgetCreationFragment.this)
-                        .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
-            }
-        });
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.popBackStack();
+        } else {
+            // TODO: Remove static trip ID
+            budgetViewModel.createBudget("Test1", transportationBudget, accommodationBudget, activityBudget, foodBudget);
+            NavHostFragment.findNavController(BudgetCreationFragment.this)
+                    .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
+        }
+    });
 
         return view;
-    }
+}
 
     private int parse_value(EditText textObject) {
         String budgetText = textObject.getText().toString();
