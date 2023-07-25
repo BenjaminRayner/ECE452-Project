@@ -15,12 +15,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tripgen.databinding.FragmentBudgetCreationBinding;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
@@ -44,6 +43,14 @@ public class BudgetCreationFragment extends Fragment {
         pieChart.setHoleRadius(60f);
         pieChart.setTransparentCircleRadius(64f);
         pieChart.setRotationEnabled(false);
+
+        Legend legend = pieChart.getLegend();
+        legend.setTextSize(15f);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setDrawInside(true);
+
 
         EditText[] editTexts = {
                 binding.transportationEditText,
@@ -123,27 +130,30 @@ public class BudgetCreationFragment extends Fragment {
         int activityBudget = parse_value(binding.activityEditText);
         int foodBudget = parse_value(binding.foodEditText);
 
-        if (transportationBudget == 0 && accommodationBudget == 0 && activityBudget == 0 && foodBudget == 0) {
-            transportationBudget = 25;
-            accommodationBudget = 25;
-            activityBudget = 25;
-            foodBudget = 25;
-        }
-
         PieChart pieChart = binding.categoryDistChart;
 
+        int[] chartColors;
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(transportationBudget, "Transportation"));
-        entries.add(new PieEntry(accommodationBudget, "Accommodation"));
-        entries.add(new PieEntry(activityBudget, "Activity"));
-        entries.add(new PieEntry(foodBudget, "Food"));
 
-        int[] chartColors = new int[]{
-                Color.parseColor("#00BFFF"),  // Orange for Transportation
-                Color.parseColor("#FFA500"),  // Deep Sky Blue for Accommodation
-                Color.parseColor("#FF0000"),  // Red for Activity
-                Color.parseColor("#32CD32")   // Lime Green for Food
-        };
+        if (transportationBudget == 0 && accommodationBudget == 0 && activityBudget == 0 && foodBudget == 0) {
+            chartColors = new int[]{
+                    Color.parseColor("#808080")
+            };
+
+            entries.add(new PieEntry(100f, "Empty Budget"));
+        } else {
+            chartColors = new int[]{
+                    Color.parseColor("#00BFFF"),
+                    Color.parseColor("#FFA500"),
+                    Color.parseColor("#FF0000"),
+                    Color.parseColor("#32CD32")
+            };
+
+            if (transportationBudget > 0) entries.add(new PieEntry(transportationBudget, "Transportation"));
+            if (accommodationBudget > 0) entries.add(new PieEntry(accommodationBudget, "Accommodation"));
+            if (activityBudget > 0) entries.add(new PieEntry(activityBudget, "Activity"));
+            if (foodBudget > 0) entries.add(new PieEntry(foodBudget, "Food"));
+        }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(chartColors);
@@ -161,8 +171,7 @@ public class BudgetCreationFragment extends Fragment {
         });
 
         PieData pieData = new PieData(dataSet);
-        pieData.setValueTextSize(12f);
-        pieData.setValueTextColor(Color.BLACK);
+        pieData.setValueTextSize(15f);
 
         pieChart.setData(pieData);
         pieChart.invalidate();

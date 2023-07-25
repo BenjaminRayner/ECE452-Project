@@ -12,10 +12,37 @@
         android:id="@+id/categoryDistChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toTopOf="@id/transportationText"
+        app:layout_constraintBottom_toTopOf="@+id/totalBudgetLabel"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/budget_category"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/totalBudgetLabel"
+        app:layout_constraintEnd_toStartOf="@+id/totalBudgetLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/totalBudgetLabel" />
+
+    <TextView
+        android:id="@+id/totalBudgetLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/total_budget"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/categoryLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -34,12 +61,13 @@
         android:id="@+id/transportationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ems="6"
+        android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/accommodationText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.584" />
+        app:layout_constraintEnd_toEndOf="@+id/totalBudgetLabel"
+        app:layout_constraintStart_toStartOf="@+id/totalBudgetLabel"
+        app:layout_constraintTop_toBottomOf="@+id/totalBudgetLabel" />
 
     <TextView
         android:id="@+id/accommodationLabel"
@@ -49,23 +77,22 @@
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/accommodationText"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/accommodationText"
-        app:layout_constraintVertical_bias="0.608" />
+        app:layout_constraintEnd_toEndOf="@+id/categoryLabel"
+        app:layout_constraintStart_toStartOf="@+id/categoryLabel"
+        app:layout_constraintTop_toTopOf="@+id/accommodationText" />
+
 
     <TextView
         android:id="@+id/accommodationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="6"
+        android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/accommodationLabel"
+        app:layout_constraintEnd_toEndOf="@+id/totalBudgetLabel"
+        app:layout_constraintStart_toStartOf="@+id/totalBudgetLabel"
         app:layout_constraintTop_toBottomOf="@+id/transportationText" />
-
 
     <TextView
         android:id="@+id/activityLabel"
@@ -75,9 +102,10 @@
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/activityText"
-        app:layout_constraintEnd_toEndOf="@+id/accommodationLabel"
-        app:layout_constraintStart_toStartOf="@+id/accommodationLabel"
-        app:layout_constraintTop_toTopOf="@+id/activityText" />
+        app:layout_constraintEnd_toEndOf="@+id/foodLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/foodLabel"
+        app:layout_constraintTop_toTopOf="@+id/activityText"/>
 
     <TextView
         android:id="@+id/foodLabel"
@@ -87,7 +115,7 @@
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/foodText"
-        app:layout_constraintEnd_toEndOf="@+id/activityLabel"
+        app:layout_constraintEnd_toEndOf="@+id/accommodationLabel"
         app:layout_constraintStart_toStartOf="@+id/accommodationLabel"
         app:layout_constraintTop_toTopOf="@+id/foodText" />
 
@@ -97,9 +125,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="6"
+        android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/accommodationText"
-        app:layout_constraintStart_toStartOf="@+id/accommodationText"
+        app:layout_constraintEnd_toEndOf="@+id/totalBudgetLabel"
+        app:layout_constraintStart_toStartOf="@+id/totalBudgetLabel"
         app:layout_constraintTop_toBottomOf="@+id/accommodationText" />
 
 
@@ -109,9 +138,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="6"
+        android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/foodText"
-        app:layout_constraintStart_toStartOf="@+id/foodText"
+        app:layout_constraintEnd_toEndOf="@+id/totalBudgetLabel"
+        app:layout_constraintStart_toStartOf="@+id/totalBudgetLabel"
         app:layout_constraintTop_toBottomOf="@+id/foodText" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

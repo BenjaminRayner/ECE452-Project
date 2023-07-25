@@ -77,4 +77,6 @@
     <string name="accommodationCategory">Accommodation</string>
     <string name="createBudgetButton">Create Budget</string>
     <string name="updateBudgetButton">Update Budget</string>
+    <string name="budget_category">Category</string>
+    <string name="total_budget">Total / Budget</string>
 </resources>
