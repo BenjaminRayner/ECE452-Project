@@ -6,19 +6,60 @@
     android:orientation="vertical"
     android:padding="10dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioButton
+                android:id="@+id/radio_drive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/cardview_dark_background"
+                android:checked="true"
+                android:padding="8dp"
+                android:text="Drive" />
+
+            <RadioButton
+                android:id="@+id/radio_transit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/cardview_dark_background"
+                android:padding="8dp"
+                android:text="Transit" />
+
+            <RadioButton
+                android:id="@+id/radio_walk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/cardview_dark_background"
+                android:padding="8dp"
+                android:text="Walk" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/transportationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Save"
         android:textAllCaps="false" />
+
     <TextView
         android:id="@+id/transportationTiming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="20min"
-        />
-
+        android:text="20min" />
 
 </LinearLayout>
+
