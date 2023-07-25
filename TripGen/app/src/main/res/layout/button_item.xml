@@ -11,6 +11,7 @@
         android:layout_height="wrap_content">
 
         <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -47,13 +48,6 @@
         </RadioGroup>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/transportationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/transportationTiming"

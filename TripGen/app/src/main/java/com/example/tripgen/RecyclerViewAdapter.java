@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return new PlaceViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.button_item, parent, false);
-            return new ButtonViewHolder(view);
+            return new RadioGroupViewHolder(view);
         }
     }
 
@@ -86,31 +88,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             });
 
-        } else if (holder instanceof ButtonViewHolder) {
+        } else if (holder instanceof RadioGroupViewHolder) {
 
-            ((ButtonViewHolder) holder).button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Handle your button action here...
-                    System.out.println("yo");
-                    ViewGroup parentView = (ViewGroup) v.getParent();
-                    TextView t = parentView.findViewById(R.id.transportationTiming);
-
-                    getDistanceTime("CN Tower", "Casa Loma", "mode", new DistanceTimeCallback() {
-                        @Override
-                        public void onResponse(String response) {
-                            // Use the response here
-                            t.setText(response);
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            // Handle error here
-                        }
-                    });
-
-                }
-            });
         }
     }
     private static String buildUrl(
@@ -229,16 +208,55 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    class ButtonViewHolder extends RecyclerView.ViewHolder {
+    class RadioGroupViewHolder extends RecyclerView.ViewHolder {
 
-        Button button;
+        RadioGroup radioGroup;
+        TextView transportationTiming;
+        RadioButton defaultRadioButton;
 
-        public ButtonViewHolder(@NonNull View itemView) {
+        public RadioGroupViewHolder(@NonNull View itemView) {
             super(itemView);
-            button = itemView.findViewById(R.id.transportationButton);
-            button.setOnClickListener(view -> {
-                // Define your button click action here
-            });
+            radioGroup = itemView.findViewById(R.id.radio_group); // Replace with your RadioGroup id
+            transportationTiming = itemView.findViewById(R.id.transportationTiming); // Your TextView for displaying time
+            defaultRadioButton = itemView.findViewById(R.id.radio_drive); // Replace with your default RadioButton id
+
+            RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    if (checkedId != -1) {
+                        RadioButton selectedRadioButton = group.findViewById(checkedId);
+                        String mode = selectedRadioButton.getText().toString();
+
+                        // You need to replace "CN Tower" and "Casa Loma" with the actual origin and destination based on position
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION && position / 2 < titleList.size() - 1) {
+                            String origin = titleList.get(position / 2);
+                            String destination = titleList.get(position / 2 + 1);
+
+                            getDistanceTime(origin, destination, mode, new DistanceTimeCallback() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // Use the response here
+                                    transportationTiming.setText(response);
+                                }
+
+                                @Override
+                                public void onError(String error) {
+                                    // Handle error here
+                                }
+                            });
+                        }
+                    } else {
+                        Toast.makeText(group.getContext(), "No Radio Button selected", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+
+            radioGroup.setOnCheckedChangeListener(listener);
+
+            // Check the default radio button and trigger the initial calculation
+            defaultRadioButton.setChecked(true);
+            listener.onCheckedChanged(radioGroup, defaultRadioButton.getId());
         }
     }
 }
