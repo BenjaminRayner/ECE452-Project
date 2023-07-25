@@ -69,4 +69,14 @@
     <string name="search">Search</string>
     <string name="save">Save</string>
     <string name="enter_notes">Enter Notes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="transportationCategory">Transportation</string>
+    <string name="activityCategory">Activity</string>
+    <string name="foodCategory">Food</string>
+    <string name="accommodationCategory">Accommodation</string>
+    <string name="createBudgetButton">Create Budget</string>
+    <string name="updateBudgetButton">Update Budget</string>
+    <string name="budget_category">Category</string>
+    <string name="total_budget">Total / Budget</string>
 </resources>

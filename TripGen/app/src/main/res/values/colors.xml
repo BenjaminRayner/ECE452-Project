@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="aiMessageTextColor">#808080</color>
     <color name="userMessageTextColor">#555555</color>
+    <color name="progressColorOverBudget">#EC0000</color>
+    <color name="progressBackgroundColorOverBudget">#EC7474</color>
+    <color name="progressColorUnderBudget">#51B1E4</color>
+    <color name="progressBackgroundColorUnderBudget">#555555</color>
 </resources>

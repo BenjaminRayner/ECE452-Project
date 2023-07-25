@@ -57,6 +57,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.io.IOException;
 import java.sql.Array;
@@ -152,6 +153,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //                openGoogleMapsWithDirections(locations);
             }
         });
+
+
+        Button expenseViewButton = view.findViewById(R.id.expenseViewButton);
+
+        expenseViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(MapFragment.this)
+                        .navigate(R.id.action_thirdFragment_to_ExpenseViewFragment);
+            }
+        });
+
 
         return view;
     }
