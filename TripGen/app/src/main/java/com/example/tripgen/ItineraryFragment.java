@@ -22,6 +22,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripgen.databinding.FragmentDateBinding;
 import com.example.tripgen.databinding.FragmentItineraryBinding;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +55,8 @@ public class ItineraryFragment extends Fragment {
     };
 
     private Event[] events;
+    private PlacesClient placesClient;
+    private GoogleMap googleMap;
     String [] location_names = {"CN Tower", "Casa Loma", "Royal Ontario Museum", "Ripley's Aquarium"};
     int [] location_images = {R.drawable.cn_tower, R.drawable.casa_loma, R.drawable.rom, R.drawable.ripleys};
 
@@ -69,13 +80,38 @@ public class ItineraryFragment extends Fragment {
 //        EventAdapter adapter = new EventAdapter(requireActivity(), events);
 //        binding.listView.setAdapter(adapter);
 
+        //initialize geoDataClient
+        Places.initialize(getActivity(), "AIzaSyC71z73qlGojykNfUrUXAmscdv8JGfzn8I");
+        placesClient = Places.createClient(getActivity());
+
+        //Initialize AutocompleteSupportFragment
+        AutocompleteSupportFragment autocompleteSupportFragment =
+                (AutocompleteSupportFragment)getChildFragmentManager()
+                        .findFragmentById(R.id.autoCompleteTextViewSearch);
+
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,
+                Place.Field.NAME, Place.Field.LAT_LNG));
+
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                Toast.makeText(getActivity(), "Selected: " + place.getName(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+                Toast.makeText(getActivity(), "Error: " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         ListView listViewMenu = (ListView) view.findViewById(R.id.listViewChoose);
         programAdapter = new ProgramAdapter(getActivity(), location_names, location_images);
         listViewMenu.setAdapter(programAdapter);
 
         RecyclerView listViewChoosen = (RecyclerView) view.findViewById(R.id.list_view_display);
-        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, programAdapter.getImageList());
+        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listViewChoosen.setLayoutManager(linearLayoutManager);
         listViewChoosen.setAdapter(adapter1);
