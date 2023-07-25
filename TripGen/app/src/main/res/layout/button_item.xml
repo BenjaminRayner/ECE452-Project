@@ -51,7 +51,11 @@
         android:id="@+id/transportationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="Save"
+=======
+        android:text="Get Distance and Time"
+>>>>>>> 45b6c74af6f5ea3dc9c528f6bbb919ad307ee896
         android:textAllCaps="false" />
 
     <TextView
@@ -59,7 +63,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+<<<<<<< HEAD
         android:text="20min" />
+=======
+        />
+
+>>>>>>> 45b6c74af6f5ea3dc9c528f6bbb919ad307ee896
 
 </LinearLayout>
 
