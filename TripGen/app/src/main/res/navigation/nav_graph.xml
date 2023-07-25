@@ -87,7 +87,7 @@
     <fragment
         android:id="@+id/thirdFragment"
         android:name="com.example.tripgen.MapFragment"
-        android:label="Map"
+        android:label="Activity Details"
         tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_thirdFragment_to_ExpenseViewFragment"
@@ -96,7 +96,7 @@
     <fragment
         android:id="@+id/BudgetCreationFragment"
         android:name="com.example.tripgen.BudgetCreationFragment"
-        android:label="Budget Allocation"
+        android:label="Budget Creation"
         tools:layout="@layout/fragment_budget_creation">
         <action
             android:id="@+id/action_BudgetCreationFragment_to_DateFragment"
@@ -114,7 +114,7 @@
     <fragment
         android:id="@+id/ExpenseViewFragment"
         android:name="com.example.tripgen.ExpenseViewFragment"
-        android:label="Expense View"
+        android:label="Activity Expenses"
         tools:layout="@layout/fragment_expense_view">
         <action
             android:id="@+id/action_ExpenseViewFragment_to_ExpenseCreationFragment"
@@ -139,7 +139,7 @@
     <fragment
         android:id="@+id/BudgetTotalFragment"
         android:name="com.example.tripgen.BudgetTotalFragment"
-        android:label="Budget"
+        android:label="Budget Summary"
         tools:layout="@layout/fragment_budget_total">
         <action
             android:id="@+id/action_BudgetTotalFragment_to_DateFragment"

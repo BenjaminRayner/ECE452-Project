@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -56,7 +57,7 @@ public class BudgetTotalFragment extends Fragment {
         int numCategories = Budget.Category.values().length;
 
         double[] totals = new double[numCategories];
-        double[] budgets = new double[numCategories];
+        int [] budgets = new int[numCategories];
         for (int i=0; i<numCategories; i++) {
             Budget.Category category = Budget.Category.values()[i];
             totals[i] = budgetViewModel.getTotal(category);
@@ -77,9 +78,17 @@ public class BudgetTotalFragment extends Fragment {
             if (totals[i] > budgets[i]) {
                 textViews[i].setTextColor(Color.RED);
             } else {
-                textViews[i].setTextColor(Color.GREEN);
+                textViews[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.underBudgetText));
             }
-            textViews[i].setText(String.format("%.2f", totals[i]) + "/" + String.format("%.2f", budgets[i]));
+
+
+            String formattedTotal;
+            if ((totals[i] * 100) % 100 != 0) {
+                formattedTotal = String.format("%.2f", totals[i]);
+            } else {
+                formattedTotal = String.format("%.0f", totals[i]);
+            }
+            textViews[i].setText(formattedTotal + " / " + Integer.toString(budgets[i]));
         }
 
 
@@ -120,7 +129,7 @@ public class BudgetTotalFragment extends Fragment {
             chartColors = new int[]{
                     Color.parseColor("#00BFFF"),
                     Color.parseColor("#FFA500"),
-                    Color.parseColor("#FF0000"),
+                    Color.parseColor("#FF3F3B"),
                     Color.parseColor("#32CD32")
             };
 
@@ -138,7 +147,7 @@ public class BudgetTotalFragment extends Fragment {
             @Override
             public String getFormattedValue(float value) {
                 if (Float.compare(value, 0f) != 0) {
-                    return String.format("%.2f", value);
+                    return String.format("%.0f", value);
                 } else {
                     return ""; // Hide label for values equal to 0
                 }

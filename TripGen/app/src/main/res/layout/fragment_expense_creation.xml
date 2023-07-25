@@ -10,7 +10,7 @@
         android:id="@+id/createExpenseText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Create Expense"
+        android:text=""
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="1dp" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amount"
+        android:text="@string/amount"
         app:layout_constraintBottom_toTopOf="@+id/expenseAmountInput"
         app:layout_constraintStart_toStartOf="@+id/expenseAmountInput" />
 
@@ -39,7 +39,7 @@
         android:id="@+id/categoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category"
+        android:text="@string/category"
         app:layout_constraintBottom_toTopOf="@+id/expenseCategorySpinner"
         app:layout_constraintStart_toStartOf="@+id/expenseCategorySpinner" />
 
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit Expense"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/createExpenseText"
         app:layout_constraintStart_toStartOf="@+id/createExpenseText"
         app:layout_constraintTop_toTopOf="@+id/createExpenseText"
@@ -71,21 +71,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="136dp"
         android:text="Delete Expense"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/createExpenseText"
         app:layout_constraintStart_toStartOf="@+id/createExpenseText"
         app:layout_constraintTop_toBottomOf="@+id/submitExpenseButton"
         app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.tripgen.BudgetSummaryFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/createExpenseText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,16 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 public class TripCreationFragment extends Fragment {
 
     private FragmentTripCreationBinding binding;
+    private MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        materialDatePicker = MaterialDatePicker
+                .Builder.dateRangePicker()
+                .setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds()))
+                .build();
+    }
 
     @Override
     public View onCreateView(
@@ -30,25 +40,22 @@ public class TripCreationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+            if (materialDatePicker.getHeaderText() == null || materialDatePicker.getHeaderText().equals("")) {
+                Toast.makeText(requireContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+            } else {
+                NavHostFragment.findNavController(this)
+                        .navigate(R.id.action_TripCreationFragment_to_budgetCreationFragment);
+            }
+        });
+
         binding.calendarButton.setOnClickListener(v -> {
-            Pair<Long, Long> defaultSelection = Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds());
-
-            MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.
-                    Builder.dateRangePicker().setSelection(defaultSelection).build();
-
-            materialDatePicker.show(getParentFragmentManager(), "Tag_picker");
-            materialDatePicker.addOnPositiveButtonClickListener(selection -> {
-
-                String tripName = binding.editTripName.getText().toString().trim();
-                if (materialDatePicker.getHeaderText() == null || materialDatePicker.getHeaderText().equals("")) {
-                    Toast.makeText(requireContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
-                } else if (tripName.isEmpty()) {
-                    Toast.makeText(requireContext(), R.string.empty_trip_name, Toast.LENGTH_SHORT).show();
-                } else {
-                    NavHostFragment.findNavController(TripCreationFragment.this)
-                            .navigate(R.id.action_TripCreationFragment_to_budgetCreationFragment);
-                }
-            });
+            String tripName = binding.editTripName.getText().toString().trim();
+            if (tripName.isEmpty()) {
+                Toast.makeText(requireContext(), R.string.empty_trip_name, Toast.LENGTH_SHORT).show();
+            } else {
+                materialDatePicker.show(getParentFragmentManager(), "Tag_picker");
+            }
         });
     }
 

@@ -141,11 +141,12 @@ public class BudgetCreationFragment extends Fragment {
             };
 
             entries.add(new PieEntry(100f, "Empty Budget"));
+
         } else {
             chartColors = new int[]{
                     Color.parseColor("#00BFFF"),
                     Color.parseColor("#FFA500"),
-                    Color.parseColor("#FF0000"),
+                    Color.parseColor("#FF3F3B"),
                     Color.parseColor("#32CD32")
             };
 
@@ -165,7 +166,7 @@ public class BudgetCreationFragment extends Fragment {
                 if (Float.compare(value, 0f) != 0) {
                     return String.valueOf((int) value);
                 } else {
-                    return ""; // Hide label for values equal to 0
+                    return "";
                 }
             }
         });
