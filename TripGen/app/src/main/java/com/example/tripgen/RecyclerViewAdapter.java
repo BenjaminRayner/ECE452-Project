@@ -1,6 +1,8 @@
 package com.example.tripgen;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,12 +29,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     List<String> titleList;
     Fragment mFragment;
+    Activity mActivity;
+    GoogleApi googleApi;
 
-    public RecyclerViewAdapter(Fragment fragment, List<String> titleList) {
+    public RecyclerViewAdapter(Fragment fragment, List<String> titleList, Activity activity) {
         this.mFragment = fragment;
         this.titleList = titleList;
+        this.mActivity = activity;
+        this.googleApi = new GoogleApi(mActivity);
     }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,6 +54,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PlaceViewHolder) {
             ((PlaceViewHolder) holder).textView.setText(titleList.get(position / 2));
+
+            googleApi.getPictureOfLocationToManipulate(titleList.get(position / 2), new GoogleApi.FetchPictureCallback() {
+                @Override
+                public void onPictureFetched(Bitmap bitmap) {
+                    // Do whatever you need with the bitmap here
+                    ((PlaceViewHolder) holder).imageView.setImageBitmap(bitmap);
+                    Log.d("Debug", "Bitmap width: " + bitmap.getWidth() + ", height: " + bitmap.getHeight());
+                }
+
+                @Override
+                public void onFetchFailure(Exception exception) {
+                    // Handle the exception here
+                    Log.d("Debug", "Error while getting the image");
+                }
+            });
+
         } else if (holder instanceof ButtonViewHolder) {
 
             ((ButtonViewHolder) holder).button.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +80,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         }
     }
+    private void getPictures(String place){
+        googleApi.getPictureOfLocationToManipulate(place, new GoogleApi.FetchPictureCallback() {
+            @Override
+            public void onPictureFetched(Bitmap bitmap) {
+                // Do whatever you need with the bitmap here
+
+                Log.d("Debug", "Bitmap width: " + bitmap.getWidth() + ", height: " + bitmap.getHeight());
+
+            }
+
+            @Override
+            public void onFetchFailure(Exception exception) {
+                // Handle the exception here
+                Log.d("Debug", "Error while getting the image");
+            }
+        });
+
+    }
+
 
     @Override
     public int getItemCount() {
@@ -73,10 +113,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class PlaceViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
+        ImageView imageView;
 
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textViewItinerary);
+            imageView = itemView.findViewById(R.id.imageViewItinerary);
             itemView.setOnClickListener(view -> {
                 NavHostFragment.findNavController(mFragment).navigate(R.id.action_ItineraryFragment_to_thirdFragment);
             });
@@ -92,6 +134,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             button = itemView.findViewById(R.id.transportationButton);
             button.setOnClickListener(view -> {
                 // Define your button click action here
+                TextView t = view.findViewById(R.id.transportationTiming);
+                t.setText("lol");
+                System.out.println("lol");
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.getDistanceTime("","","");
             });
         }
     }

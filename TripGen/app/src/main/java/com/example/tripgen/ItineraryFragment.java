@@ -111,7 +111,7 @@ public class ItineraryFragment extends Fragment {
         listViewMenu.setAdapter(programAdapter);
 
         RecyclerView listViewChoosen = (RecyclerView) view.findViewById(R.id.list_view_display);
-        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names);
+        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, getActivity());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listViewChoosen.setLayoutManager(linearLayoutManager);
         listViewChoosen.setAdapter(adapter1);
