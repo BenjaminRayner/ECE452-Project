@@ -91,7 +91,6 @@ public class GoogleApi {
         placesClient = Places.createClient(activity);
     }
 
-
     //shared
     public void getDetailsOfLocationToManipulate(String location) {
         getDetailsOfLocation(
@@ -172,9 +171,9 @@ public class GoogleApi {
                 location,
                 new FetchPictureCallback() {
                     @Override
-                    public void onPictureFetched(Bitmap bitmap) {
+                    public void onPictureFetched(Bitmap bitmap, Place place) {
                         //do something with the image
-                        callback.onPictureFetched(bitmap);
+                        callback.onPictureFetched(bitmap, place);
                     }
 
                     @Override
@@ -302,7 +301,6 @@ public class GoogleApi {
                     @Override
                     public void onPlaceFetched(Place place) {
                         List<PhotoMetadata> photoMetadatas = place.getPhotoMetadatas();
-
                         if (photoMetadatas != null && !photoMetadatas.isEmpty()) {
                             PhotoMetadata photoMetadata = photoMetadatas.get(0);
 
@@ -319,7 +317,7 @@ public class GoogleApi {
                                             FetchPhotoResponse photoResponse = task.getResult();
                                             Bitmap bitmap = photoResponse.getBitmap();
 
-                                            callback.onPictureFetched(bitmap);
+                                            callback.onPictureFetched(bitmap, place);
                                         } else {
                                             Exception exception = task.getException();
                                             callback.onFetchFailure(exception);
@@ -349,7 +347,7 @@ public class GoogleApi {
     }
 
     public interface FetchPictureCallback {
-        void onPictureFetched(Bitmap bitmap);
+        void onPictureFetched(Bitmap bitmap, Place place);
 
         void onFetchFailure(Exception exception);
     }

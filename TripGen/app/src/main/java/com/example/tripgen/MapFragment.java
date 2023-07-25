@@ -101,6 +101,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Places.initialize(getActivity(), "AIzaSyC71z73qlGojykNfUrUXAmscdv8JGfzn8I");
         placesClient = Places.createClient(getActivity());
 
+        Bundle args = getArguments();
+        if(args != null){
+            String location = args.getString("location");
+            Log.d("MapFragment", "Received location argument: " + location);
+        }
+
         //Initialize AutocompleteSupportFragment
         AutocompleteSupportFragment autocompleteSupportFragment =
                 (AutocompleteSupportFragment)getChildFragmentManager()
@@ -141,7 +147,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //        getDetailsOfLocationToManipulate("Canada's Wonderland");
 //        getPictureOfLocationToManipulate("Canada's Wonderland");
 //
-//        makeNearbyPlaceRequestToManipulate();
+        //getCurrentLocation();
+        //makeNearbyPlaceRequestToManipulate();
+        getPictureOfLocationToManipulate("Niagara Falls");
 
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -190,8 +198,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onPlaceArrayListFetched(ArrayList<Place> places) {
                 for(Place place : places){
-                    Log.i("Place", "Place Name: " + place.getName());
-                    Log.i("Place", "Place Address: " + place.getAddress());
+                    Log.i("Place", "Nearby-Place Name: " + place.getName());
+                    Log.i("Place", "Nearby-Place Address: " + place.getAddress());
                 }
                 //do all the manipulation of the place info here
             }
@@ -210,8 +218,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void getPictureOfLocationToManipulate(String location) {
         getPictureOfLocation(location, new FetchPictureCallback() {
             @Override
-            public void onPictureFetched(Bitmap bitmap) {
+            public void onPictureFetched(Bitmap bitmap, Place place) {
                 testBitMapInAlertDialog(bitmap);
+                Log.i("Place", "Picture Name: " + place.getName());
+                Log.i("Place", "Picture Address: " + place.getAddress());
                 //do something with the image
             }
 
@@ -316,7 +326,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             FetchPhotoResponse photoResponse = task.getResult();
                             Bitmap bitmap = photoResponse.getBitmap();
 
-                            callback.onPictureFetched(bitmap);
+                            callback.onPictureFetched(bitmap, place);
                         } else {
                             Exception exception = task.getException();
                             callback.onFetchFailure(exception);
@@ -448,7 +458,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public interface FetchPictureCallback {
-        void onPictureFetched(Bitmap bitmap);
+        void onPictureFetched(Bitmap bitmap, Place place);
 
         void onFetchFailure(Exception exception);
     }

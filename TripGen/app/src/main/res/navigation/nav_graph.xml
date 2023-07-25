@@ -89,6 +89,9 @@
         android:name="com.example.tripgen.MapFragment"
         android:label="Map"
         tools:layout="@layout/fragment_map">
+        <argument
+            android:name = "location"
+            app:argType="string" />
         <action
             android:id="@+id/action_thirdFragment_to_ExpenseViewFragment"
             app:destination="@id/ExpenseViewFragment" />

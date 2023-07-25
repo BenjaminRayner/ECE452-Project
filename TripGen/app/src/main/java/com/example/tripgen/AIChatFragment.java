@@ -3,6 +3,7 @@ package com.example.tripgen;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -37,13 +38,13 @@ import java.util.concurrent.CountDownLatch;
 
 public class AIChatFragment extends Fragment {
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 123;
     private RecyclerView recyclerView;
     private EditText inputText;
     private Button sendButton;
     private ArrayList<Message> messages = new ArrayList<>();
     private MessagesAdapter messagesAdapter = new MessagesAdapter(messages);
     private FragmentAIChatBinding binding;
-
     private int optionSelected;
 
     @Override
@@ -113,7 +114,7 @@ public class AIChatFragment extends Fragment {
 
                             googleApi.getPictureOfLocationToManipulate(place, new GoogleApi.FetchPictureCallback() {
                                 @Override
-                                public void onPictureFetched(Bitmap bitmap) {
+                                public void onPictureFetched(Bitmap bitmap, Place place1) {
                                     // Do whatever you need with the bitmap here
                                     messages.add(new Message(place,"",bitmap,Message.TYPE_LISTS));
                                     Log.d("Debug", "Bitmap width: " + bitmap.getWidth() + ", height: " + bitmap.getHeight());
@@ -208,7 +209,7 @@ public class AIChatFragment extends Fragment {
 
                                 googleApi.getPictureOfLocationToManipulate(placeName, new GoogleApi.FetchPictureCallback() {
                                     @Override
-                                    public void onPictureFetched(Bitmap bitmap) {
+                                    public void onPictureFetched(Bitmap bitmap, Place place1) {
                                         // Do whatever you need with the bitmap here
                                         messages.add(new Message(placeName,"",bitmap,Message.TYPE_LISTS));
                                         Log.d("Debug", "Bitmap width: " + bitmap.getWidth() + ", height: " + bitmap.getHeight());
@@ -343,6 +344,17 @@ public class AIChatFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == LOCATION_PERMISSION_REQUEST_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                //permission granted, you are good to go
+            }else{
+                Toast.makeText(getContext(), "Location access denied. Please turn on GPS to use this feature", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }
