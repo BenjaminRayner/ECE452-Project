@@ -72,10 +72,10 @@ public class BudgetCreationFragment extends Fragment {
 
         // Must be editing budget
         if (budgetViewModel.validBudget()) {
-            binding.transportationEditText.setText(Integer.toString((int) budgetViewModel.getBudget(Budget.Category.TRANSPORTATION)));
-            binding.accommodationEditText.setText(Integer.toString((int) budgetViewModel.getBudget(Budget.Category.ACCOMMODATION)));
-            binding.foodEditText.setText(Integer.toString((int) budgetViewModel.getBudget(Budget.Category.FOOD)));
-            binding.activityEditText.setText(Integer.toString((int) budgetViewModel.getBudget(Budget.Category.ACTIVITIES)));
+            binding.transportationEditText.setText(Integer.toString(budgetViewModel.getBudget(Budget.Category.TRANSPORTATION)));
+            binding.accommodationEditText.setText(Integer.toString(budgetViewModel.getBudget(Budget.Category.ACCOMMODATION)));
+            binding.foodEditText.setText(Integer.toString(budgetViewModel.getBudget(Budget.Category.FOOD)));
+            binding.activityEditText.setText(Integer.toString(budgetViewModel.getBudget(Budget.Category.ACTIVITIES)));
 
             binding.budgetCreationButton.setText(R.string.updateBudgetButton);
         }

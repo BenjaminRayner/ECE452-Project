@@ -31,6 +31,9 @@ public class TripFragment extends Fragment {
         budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
         budgetViewModel.setContext(getContext());
 
+        // When entering trip selection, remove budget selection
+        budgetViewModel.removeBudget();
+
 
         binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

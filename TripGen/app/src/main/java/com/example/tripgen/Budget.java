@@ -60,7 +60,7 @@ public class Budget {
         categoryData.setBudget(budget);
     }
 
-    public double getBudget(Category category) {
+    public int getBudget(Category category) {
         CategoryData categoryData = getCategoryData(category);
         return categoryData.getBudget();
     }

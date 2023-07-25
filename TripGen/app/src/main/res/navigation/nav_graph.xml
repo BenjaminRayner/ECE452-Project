@@ -54,8 +54,8 @@
             android:id="@+id/action_DateFragment_to_ItineraryFragment"
             app:destination="@id/ItineraryFragment" />
         <action
-            android:id="@+id/action_DateFragment_to_BudgetCreationFragment"
-            app:destination="@id/BudgetCreationFragment" />
+            android:id="@+id/action_DateFragment_to_BudgetTotalFragment"
+            app:destination="@id/BudgetTotalFragment" />
     </fragment>
     <fragment
         android:id="@+id/TripCreationFragment"
@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_ItineraryFragment_to_AIChatFragment"
             app:destination="@id/aiChatFragment" />
+        <action
+            android:id="@+id/action_ItineraryFragment_to_ExpenseViewFragment"
+            app:destination="@id/ExpenseViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/thirdFragment"
@@ -98,8 +101,8 @@
         android:label="Expense Creation"
         tools:layout="@layout/fragment_expense_creation">
         <action
-            android:id="@+id/action_ExpenseCreationFragment_to_BudgetCreationFragment"
-            app:destination="@id/BudgetCreationFragment" />
+            android:id="@+id/action_ExpenseCreationFragment_to_BudgetTotalFragment"
+            app:destination="@id/BudgetTotalFragment" />
     </fragment>
     <fragment
         android:id="@+id/ExpenseViewFragment"
@@ -108,10 +111,14 @@
         tools:layout="@layout/fragment_expense_view">
         <action
             android:id="@+id/action_ExpenseViewFragment_to_ExpenseCreationFragment"
-            app:destination="@id/ExpenseCreationFragment" />
+            app:destination="@id/ExpenseCreationFragment">
+            <argument
+                android:name="activityID"
+                app:argType="string" />
+        </action>
         <action
-            android:id="@+id/action_ExpenseViewFragment_to_BudgetCreationFragment"
-            app:destination="@id/BudgetCreationFragment" />
+            android:id="@+id/action_ExpenseViewFragment_to_BudgetTotalFragment"
+            app:destination="@id/BudgetTotalFragment" />
     </fragment>
     <fragment
         android:id="@+id/BudgetSummaryFragment"
@@ -120,6 +127,18 @@
         tools:layout="@layout/fragment_budget_summary">
         <action
             android:id="@+id/action_BudgetSummaryFragment_to_BudgetCreationFragment"
+            app:destination="@id/BudgetCreationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/BudgetTotalFragment"
+        android:name="com.example.tripgen.BudgetTotalFragment"
+        android:label="Budget"
+        tools:layout="@layout/fragment_budget_total">
+        <action
+            android:id="@+id/action_BudgetTotalFragment_to_DateFragment"
+            app:destination="@id/DateFragment" />
+        <action
+            android:id="@+id/action_BudgetTotalFragment_to_BudgetCreationFragment"
             app:destination="@id/BudgetCreationFragment" />
     </fragment>
 </navigation>

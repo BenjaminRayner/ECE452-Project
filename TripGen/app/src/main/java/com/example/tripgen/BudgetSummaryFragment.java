@@ -52,11 +52,11 @@ public class BudgetSummaryFragment extends Fragment implements CategoryAdapter.O
 
         int actionId;
         if (currentDestinationId == R.id.DateFragment) {
-            actionId = R.id.action_DateFragment_to_BudgetCreationFragment;
+            actionId = R.id.action_DateFragment_to_BudgetTotalFragment;
         } else if (currentDestinationId == R.id.ExpenseViewFragment) {
-            actionId = R.id.action_ExpenseViewFragment_to_BudgetCreationFragment;
+            actionId = R.id.action_ExpenseViewFragment_to_BudgetTotalFragment;
         } else if (currentDestinationId == R.id.ExpenseCreationFragment) {
-            actionId = R.id.action_ExpenseCreationFragment_to_BudgetCreationFragment;
+            actionId = R.id.action_ExpenseCreationFragment_to_BudgetTotalFragment;
         } else {
             return;
         }

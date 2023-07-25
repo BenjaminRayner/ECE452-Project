@@ -136,7 +136,7 @@ public class BudgetViewModel extends ViewModel {
         return getLiveBudget().getTotal(category);
     }
 
-    public double getBudget(Budget.Category category) {
+    public int getBudget(Budget.Category category) {
         return getLiveBudget().getBudget(category);
     }
 
@@ -155,5 +155,10 @@ public class BudgetViewModel extends ViewModel {
         budget.setBudget(Budget.Category.FOOD, foodBudget);
 
         budgetLiveData.setValue(budget);
+    }
+
+    public void removeBudget() {
+        budgetLiveData = new MutableLiveData<>();
+        removeObserver();
     }
 }
