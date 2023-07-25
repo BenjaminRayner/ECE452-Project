@@ -11,9 +11,11 @@
         android:layout_height="wrap_content">
 
         <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radio_drive"
@@ -47,19 +49,11 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/transportationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Distance and Time"
-        android:textAllCaps="false" />
-
     <TextView
         android:id="@+id/transportationTiming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="20min" />
-
 </LinearLayout>
 
