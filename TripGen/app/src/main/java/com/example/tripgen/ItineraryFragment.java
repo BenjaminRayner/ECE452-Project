@@ -134,10 +134,10 @@ public class ItineraryFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 programAdapter.choosen_location_names.add(snapshot.getKey());
-                System.out.println(programAdapter.getStartTimeHour());
-                System.out.println(programAdapter.getStartTimeMin());
-                System.out.println(programAdapter.getEndTimeHour());
-                System.out.println(programAdapter.getEndTimeMin());
+//                System.out.println(programAdapter.getStartTimeHour());
+//                System.out.println(programAdapter.getStartTimeMin());
+//                System.out.println(programAdapter.getEndTimeHour());
+//                System.out.println(programAdapter.getEndTimeMin());
                 // save this event to firebase
                 Event e = new Event(programAdapter.getPlaceImage(), programAdapter.getPlaceName(),"",programAdapter.getStartTimeHour(), programAdapter.getStartTimeMin(), programAdapter.getEndTimeHour(),programAdapter.getEndTimeMin());
                 adapter1.notifyDataSetChanged();
@@ -188,8 +188,10 @@ public class ItineraryFragment extends Fragment {
             Snackbar snackbar = Snackbar.make(getView(), "Item Deleted", Snackbar.LENGTH_LONG);
             snackbar.show();
 
+            System.out.println("deleting: "+viewHolder.getAdapterPosition());
+            System.out.println("size: "+programAdapter.choosen_location_names.size());
+            FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get((int) Math.ceil(viewHolder.getAdapterPosition()/2))).removeValue();
 
-            FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get(viewHolder.getAdapterPosition())).removeValue();
             //programAdapter.choosen_location_names.remove(viewHolder.getAdapterPosition());
             adapter1.notifyDataSetChanged();
         }
