@@ -1,5 +1,7 @@
 package com.example.tripgen;
 
+import android.graphics.Bitmap;
+
 public class Message {
     public static final int TYPE_AI = 0;
     public static final int TYPE_USER = 1;
@@ -12,14 +14,24 @@ public class Message {
 
     private String description;
     private int type;
-    private Integer imageId; // New field for image resource ID
 
-    public Message(String content,String description,Integer imageId, int type) {
+    private Bitmap imageBitmap; // New field for Bitmap
+
+    public Message(String content,String description, Bitmap imageBitmap, int type) {
         this.content = content;
         this.description = description;
-        this.imageId = imageId; // Set the image resource ID
+        this.imageBitmap = imageBitmap;
         this.type = type;
     }
+
+    public Bitmap getImageBitmap() {
+        return imageBitmap;
+    }
+
+    public void setImageBitmap(Bitmap imageBitmap) {
+        this.imageBitmap = imageBitmap;
+    }
+
 
     public String getContent() {
         return content;
@@ -29,9 +41,7 @@ public class Message {
         return description;
     }
 
-    public Integer getImageId() {
-        return imageId;
-    }
+
 
     public int getType() {
         return type;

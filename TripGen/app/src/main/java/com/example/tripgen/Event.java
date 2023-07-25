@@ -6,13 +6,19 @@ public class Event {
     private String description;
     private String startTime;
     private String endTime;
+    private int startTimeHour;
+    private int startTimeMin;
+    private int endTimeHour;
+    private int endTimeMin;
 
-    public Event(int imageResource, String name, String description, String startTime, String endTime) {
+    public Event(int imageResource, String name, String description, int startTimeHour, int startTimeMin, int endTimeHour, int endTimeMin) {
         this.imageResource = imageResource;
         this.name = name;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTimeHour = startTimeHour;
+        this.startTimeMin = startTimeMin;
+        this.endTimeHour = endTimeHour;
+        this.endTimeMin = endTimeMin;
     }
 
 
