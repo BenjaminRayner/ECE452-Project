@@ -135,7 +135,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public OptionViewHolder(@NonNull View itemView) {
             super(itemView);
             optionButton = itemView.findViewById(R.id.messageTextView);
-            // Change `R.id.messageTextView` to the ID of your button in item_message_options layout
         }
     }
 }
