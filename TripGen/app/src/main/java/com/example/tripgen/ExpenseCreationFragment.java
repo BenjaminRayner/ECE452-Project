@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tripgen.databinding.FragmentExpenseCreationBinding;
 
-import java.util.ArrayList;
 
 public class ExpenseCreationFragment extends Fragment {
 
@@ -49,7 +46,7 @@ public class ExpenseCreationFragment extends Fragment {
         budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
         budgetViewModel.setContext(getContext());
 
-        binding.expenseCategorySpinner.setAdapter(new ArrayAdapter<Budget.Category>(requireContext(), android.R.layout.simple_spinner_item, Budget.Category.values()));
+        binding.expenseCategorySpinner.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, Budget.Category.values()));
 
 
         // Modifying an existing expense
@@ -104,6 +101,9 @@ public class ExpenseCreationFragment extends Fragment {
                 Budget.Expense expense = new Budget.Expense(category, amount, activityID);
                 budgetViewModel.addExpense(expense);
             }
+
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.popBackStack();
 
         });
 

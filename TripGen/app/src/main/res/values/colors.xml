@@ -8,4 +8,5 @@
     <color name="progressBackgroundColorOverBudget">#EC7474</color>
     <color name="progressColorUnderBudget">#51B1E4</color>
     <color name="progressBackgroundColorUnderBudget">#555555</color>
+    <color name="underBudgetText">#4CAF50</color>
 </resources>

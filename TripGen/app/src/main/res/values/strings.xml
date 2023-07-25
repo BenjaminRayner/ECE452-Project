@@ -79,4 +79,6 @@
     <string name="updateBudgetButton">Update Budget</string>
     <string name="budget_category">Category</string>
     <string name="total_budget">Total / Budget</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
 </resources>
