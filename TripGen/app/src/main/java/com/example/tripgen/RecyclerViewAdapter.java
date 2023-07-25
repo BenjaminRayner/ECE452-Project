@@ -90,9 +90,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
 
         } else if (holder instanceof RadioGroupViewHolder) {
-
+            calculateTimingForDefaultSelection(titleList, position, ((RadioGroupViewHolder) holder).transportationTiming);
         }
     }
+    private void calculateTimingForDefaultSelection(List<String> titleList, int position, TextView timingTextView) {
+        int originPosition = (position - 1) / 2;
+        int destinationPosition = originPosition == titleList.size() - 1 ? 0 : (originPosition + 1);
+
+        String origin = titleList.get(originPosition);
+        String destination = titleList.get(destinationPosition);
+
+        // Assuming the default selected mode is "driving".
+        String defaultMode = "driving";
+
+        // Update the transportation timing for the default selection.
+        getDistanceTime(origin, destination, defaultMode, new DistanceTimeCallback() {
+            @Override
+            public void onResponse(String response) {
+                // Use the response here
+                timingTextView.setText(response);
+            }
+
+            @Override
+            public void onError(String error) {
+                // Handle error here
+            }
+        });
+    }
+
     private static String buildUrl(
             String origin,
             String destination,
@@ -225,43 +250,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             transportationTiming = itemView.findViewById(R.id.transportationTiming); // Your TextView for displaying time
             defaultRadioButton = itemView.findViewById(R.id.radio_drive); // Replace with your default RadioButton id
 
-            RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId != -1) {
-                        RadioButton selectedRadioButton = group.findViewById(checkedId);
-                        String mode = selectedRadioButton.getText().toString();
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if (checkedId != -1) {
+                    RadioButton selectedRadioButton = (RadioButton) group.findViewById(checkedId);
+                    String mode = selectedRadioButton.getText().toString();
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        int originPos = (pos - 1) / 2;
+                        int destinationPos = (originPos + 1) % titleList.size();
+                        String origin = titleList.get(originPos);
+                        String destination = titleList.get(destinationPos);
 
-                        // You need to replace "CN Tower" and "Casa Loma" with the actual origin and destination based on position
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION && position / 2 < titleList.size() - 1) {
-                            String origin = titleList.get(position / 2);
-                            String destination = titleList.get(position / 2 + 1);
+                        getDistanceTime(origin, destination, mode, new DistanceTimeCallback() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Use the response here
+                                transportationTiming.setText(response);
+                            }
 
-                            getDistanceTime(origin, destination, mode, new DistanceTimeCallback() {
-                                @Override
-                                public void onResponse(String response) {
-                                    // Use the response here
-                                    transportationTiming.setText(response);
-                                }
-
-                                @Override
-                                public void onError(String error) {
-                                    // Handle error here
-                                }
-                            });
-                        }
-                    } else {
-                        Toast.makeText(group.getContext(), "No Radio Button selected", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onError(String error) {
+                                // Handle error here
+                            }
+                        });
                     }
+                } else {
+                    Toast.makeText(group.getContext(), "No Radio Button selected", Toast.LENGTH_SHORT).show();
                 }
-            };
-
-            radioGroup.setOnCheckedChangeListener(listener);
+            });
 
             // Check the default radio button and trigger the initial calculation
             defaultRadioButton.setChecked(true);
-            listener.onCheckedChanged(radioGroup, defaultRadioButton.getId());
+            radioGroup.check(defaultRadioButton.getId());
         }
     }
 }
