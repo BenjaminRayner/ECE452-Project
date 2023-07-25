@@ -96,6 +96,9 @@ public class ItineraryFragment extends Fragment {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 Toast.makeText(getActivity(), "Selected: " + place.getName(), Toast.LENGTH_SHORT).show();
+                // add to view
+                place.getAddress();
+                FirebaseDatabase.getInstance().getReference().child("Places").child(place.getName()).setValue(true);
 
             }
 
@@ -141,6 +144,7 @@ public class ItineraryFragment extends Fragment {
                 // save this event to firebase
                 Event e = new Event(programAdapter.getPlaceImage(), programAdapter.getPlaceName(),"",programAdapter.getStartTimeHour(), programAdapter.getStartTimeMin(), programAdapter.getEndTimeHour(),programAdapter.getEndTimeMin());
                 adapter1.notifyDataSetChanged();
+                System.out.println(programAdapter.choosen_location_names);
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
