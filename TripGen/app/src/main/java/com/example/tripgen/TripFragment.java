@@ -39,10 +39,15 @@ public class TripFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //TODO: Remove static budget loading
-                budgetViewModel.loadBudget("Test1");
+                try {
+                    budgetViewModel.loadBudget("Test1");
+                    NavHostFragment.findNavController(TripFragment.this)
+                            .navigate(R.id.action_TripFragment_to_DateFragment);
 
-                NavHostFragment.findNavController(TripFragment.this)
-                        .navigate(R.id.action_TripFragment_to_DateFragment);
+                } catch (Exception e) {
+                    NavHostFragment.findNavController(TripFragment.this)
+                            .navigate(R.id.action_TripFragment_to_BudgetCreationFragment);
+                }
             }
         });
 
