@@ -135,21 +135,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Button saveButton = view.findViewById(R.id.searchButton2);
 
         //TESTING
-        getDistanceTime("Niagra Falls", "CN Tower", "driving");
-        getCurrentLocation();
-        getDetailsOfLocationToManipulate("Canada's Wonderland");
-        getPictureOfLocationToManipulate("Canada's Wonderland");
-
-        makeNearbyPlaceRequestToManipulate();
+//        getDistanceTime("Niagra Falls", "CN Tower", "driving");
+//        getCurrentLocation();
+//        getDetailsOfLocationToManipulate("Canada's Wonderland");
+//        getPictureOfLocationToManipulate("Canada's Wonderland");
+//
+//        makeNearbyPlaceRequestToManipulate();
 
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                ArrayList<String> locations = new ArrayList<>();
-                locations.add("Markham");
-                locations.add("CN Tower");
-                locations.add("Niagara Falls");
-                openGoogleMapsWithDirections(locations);
+//                ArrayList<String> locations = new ArrayList<>();
+//                locations.add("Markham");
+//                locations.add("CN Tower");
+//                locations.add("Niagara Falls");
+//                openGoogleMapsWithDirections(locations);
             }
         });
 
@@ -373,11 +373,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.getUiSettings().setScrollGesturesEnabled(true);
 
         //testing addItineraryTripRouteMap
-        ArrayList<String> locations = new ArrayList<>();
-        locations.add("Markham");
-        locations.add("CN Tower");
-        locations.add("Niagra Falls");
-        addItineraryTripRouteMap(locations);
+//        ArrayList<String> locations = new ArrayList<>();
+//        locations.add("Markham");
+//        locations.add("CN Tower");
+//        locations.add("Niagra Falls");
+//        addItineraryTripRouteMap(locations);
     }
 
     @Override
