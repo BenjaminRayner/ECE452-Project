@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -224,7 +225,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textView = itemView.findViewById(R.id.textViewItinerary);
             imageView = itemView.findViewById(R.id.imageViewItinerary);
             itemView.setOnClickListener(view -> {
-                NavHostFragment.findNavController(mFragment).navigate(R.id.action_ItineraryFragment_to_thirdFragment);
+                String location = textView.getText().toString();
+                Bundle args = new Bundle();
+                args.putString("location", location);
+                Log.d("RecyclerViewAdapter", "Sending location argument: " + location);
+                NavHostFragment.findNavController(mFragment).navigate(R.id.action_ItineraryFragment_to_thirdFragment, args);
             });
         }
     }

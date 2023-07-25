@@ -88,7 +88,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json";
     private static final String API_KEY = "AIzaSyC71z73qlGojykNfUrUXAmscdv8JGfzn8I";
 
+    private AutocompleteSupportFragment autocompleteSupportFragment;
 
+    private static String selectedLocation = null;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -103,17 +105,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         Bundle args = getArguments();
         if(args != null){
-            String location = args.getString("location");
-            Log.d("MapFragment", "Received location argument: " + location);
+            selectedLocation = args.getString("location");
+            Log.d("MapFragment", "Received location argument: " + selectedLocation);
         }
 
         //Initialize AutocompleteSupportFragment
-        AutocompleteSupportFragment autocompleteSupportFragment =
+        autocompleteSupportFragment =
                 (AutocompleteSupportFragment)getChildFragmentManager()
                         .findFragmentById(R.id.autoCompleteTextViewSearch);
 
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,
                 Place.Field.NAME, Place.Field.LAT_LNG));
+
+        //initialize MapView
+        mapView = view.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+
+        //get GoogleMap object
+        mapView.getMapAsync(this);
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
@@ -131,13 +140,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        //initialize MapView
-        mapView = view.findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-
-        //get GoogleMap object
-        mapView.getMapAsync(this);
-
         //save button init
         Button saveButton = view.findViewById(R.id.searchButton2);
 
@@ -149,7 +151,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //
         //getCurrentLocation();
         //makeNearbyPlaceRequestToManipulate();
-        getPictureOfLocationToManipulate("Niagara Falls");
+        //getPictureOfLocationToManipulate("Niagara Falls");
 
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -394,6 +396,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.getUiSettings().setScrollGesturesEnabled(true);
+
+        if(selectedLocation != null){
+            autocompleteSupportFragment.setText(selectedLocation);
+            LatLng locationLatLng = getLatLngFromLocation(selectedLocation);
+            googleMap.clear();
+            googleMap.addMarker(new MarkerOptions().position(locationLatLng));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 12));
+        }
 
         //testing addItineraryTripRouteMap
 //        ArrayList<String> locations = new ArrayList<>();
