@@ -186,9 +186,9 @@ public class ItineraryFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         listViewChoosen.addItemDecoration(dividerItemDecoration);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         ItemTouchHelper itemTouchHelperDelete = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(listViewChoosen);
+ //       itemTouchHelper.attachToRecyclerView(listViewChoosen);
         itemTouchHelperDelete.attachToRecyclerView(listViewChoosen);
 
 
@@ -283,23 +283,23 @@ public class ItineraryFragment extends Fragment {
         }
         return latLng;
     }
-    //drag and drop
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            int fromPosition = viewHolder.getAdapterPosition();
-            int toPosition = target.getAdapterPosition();
-            //add Firebase swap
-            Collections.swap(programAdapter.choosen_location_names, fromPosition, toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-        }
-    };
+//    //drag and drop
+//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+//        @Override
+//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//            int fromPosition = viewHolder.getAdapterPosition();
+//            int toPosition = target.getAdapterPosition();
+//            //add Firebase swap
+//            Collections.swap(programAdapter.choosen_location_names, fromPosition, toPosition);
+//            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+//            return false;
+//        }
+//
+//        @Override
+//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//        }
+//    };
     // Swipe to delete
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
         @Override
