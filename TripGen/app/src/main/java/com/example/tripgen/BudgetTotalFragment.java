@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class BudgetTotalFragment extends Fragment {
 
     private FragmentBudgetTotalBinding binding;
 //    private BudgetViewModel budgetViewModel;
+    private ListenerRegistration listenerRegistration;
 
 
     @Override
@@ -56,7 +58,7 @@ public class BudgetTotalFragment extends Fragment {
         legend.setDrawInside(true);
 
         MainActivity mainActivity = (MainActivity) requireActivity();
-        db.collection("Trips").document(mainActivity.currentTrip).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        ListenerRegistration listenerRegistration =  db.collection("Trips").document(mainActivity.currentTrip).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 Trip trip = value.toObject(Trip.class);
@@ -119,6 +121,7 @@ public class BudgetTotalFragment extends Fragment {
         });
 
         binding.editBudgetFab.setOnClickListener(v -> {
+            listenerRegistration.remove();
             NavHostFragment.findNavController(BudgetTotalFragment.this)
                     .navigate(R.id.action_BudgetTotalFragment_to_BudgetCreationFragment);
         });
