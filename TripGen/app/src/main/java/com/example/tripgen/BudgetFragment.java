@@ -19,6 +19,21 @@ public class BudgetFragment extends Fragment {
     private BudgetViewModel budgetViewModel;
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        budgetViewModel.getBudgetLiveData().observe(getViewLifecycleOwner(), budget -> {
+//            updateUI(budget);
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentBudgetBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -33,23 +48,6 @@ public class BudgetFragment extends Fragment {
 //                        .navigate(R.id.action_TripFragment_to_TripCreationFragment);
 //            }
 //        });
-
-
         return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        budgetViewModel.getBudgetLiveData().observe(getViewLifecycleOwner(), budget -> {
-//            updateUI(budget);
-        });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
