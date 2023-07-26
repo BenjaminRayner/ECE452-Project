@@ -1,6 +1,12 @@
 package com.example.tripgen;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -9,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,6 +24,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -30,6 +38,7 @@ import com.example.tripgen.databinding.RowItemBinding;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -44,10 +53,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class ItineraryFragment extends Fragment {
@@ -195,8 +207,76 @@ public class ItineraryFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        Button routeButton = view.findViewById(R.id.routeButton);
+        routeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<LatLng> locationsLatLng = new ArrayList<>();
+                if (programAdapter.choosen_location_names.size() < 2) {
+                    return;
+                }
+
+                //convert locations to LatLng
+                for(String location : programAdapter.choosen_location_names){
+                    locationsLatLng.add(getLatLngFromLocation(location));
+                }
+
+                StringBuilder uriBuilder = new StringBuilder("https://www.google.com/maps/dir/?api=1");
+
+                uriBuilder.append("&origin=")
+                        .append(locationsLatLng.get(0).latitude)
+                        .append(",")
+                        .append(locationsLatLng.get(0).longitude);
+                uriBuilder.append("&destination=")
+                        .append(locationsLatLng.get(programAdapter.choosen_location_names.size()-1).latitude)
+                        .append(",")
+                        .append(locationsLatLng.get(programAdapter.choosen_location_names.size()-1).longitude);
+
+                if(locationsLatLng.size() > 2){
+                    uriBuilder.append("&waypoints=");
+                    for(int i=1; i<locationsLatLng.size()-1; ++i){
+                        uriBuilder.append(locationsLatLng.get(i).latitude)
+                                .append(",")
+                                .append(locationsLatLng.get(i).longitude);
+                        if(i<locationsLatLng.size()-2){
+                            uriBuilder.append("!");
+                        }
+                    }
+                }
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriBuilder.toString()));
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                List<ResolveInfo> activities = getActivity().getPackageManager().queryIntentActivities(mapIntent, 0);
+
+                if(activities != null && !activities.isEmpty()){
+                    startActivity(mapIntent);
+                }else{
+                    Toast.makeText(getContext(), "Please install the Google Maps app to open Google Maps", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
 
         return view;
+    }
+    private LatLng getLatLngFromLocation(String location){
+        Geocoder geocoder = new Geocoder(requireContext());
+        LatLng latLng = null;
+        try{
+            List<Address> addresses = geocoder.getFromLocationName(location, 1);
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                double latitude = address.getLatitude();
+                double longitude = address.getLongitude();
+                latLng = new LatLng(latitude, longitude);
+            }else{
+                //resolve if address is empty
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return latLng;
     }
     //drag and drop
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
