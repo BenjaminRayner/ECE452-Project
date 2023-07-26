@@ -1,7 +1,9 @@
 package com.example.tripgen;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripgen.databinding.FragmentDateBinding;
 import com.example.tripgen.databinding.FragmentItineraryBinding;
+import com.example.tripgen.databinding.RowItemBinding;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -57,6 +62,7 @@ public class ItineraryFragment extends Fragment {
     private Event[] events;
     private PlacesClient placesClient;
     private GoogleMap googleMap;
+    private int startTimeHour, startTimeMin, endTimeHour, endTimeMin;
     String [] location_names = {"CN Tower", "Casa Loma", "Royal Ontario Museum", "Ripley's Aquarium"};
     int [] location_images = {R.drawable.cn_tower, R.drawable.casa_loma, R.drawable.rom, R.drawable.ripleys};
 
@@ -65,7 +71,8 @@ public class ItineraryFragment extends Fragment {
 //    List<String> choosen_location_names  = new ArrayList<String>();
 //
 //    List<Integer> choosen_location_images = new ArrayList<Integer>();
-
+    List<Pair<Integer, Integer>> startTimeList = new ArrayList<>();
+    List<Pair<Integer, Integer>> endTimeList = new ArrayList<>();
     RecyclerViewAdapter adapter1;
 
     ProgramAdapter programAdapter;
@@ -98,8 +105,35 @@ public class ItineraryFragment extends Fragment {
                 Toast.makeText(getActivity(), "Selected: " + place.getName(), Toast.LENGTH_SHORT).show();
                 // add to view
                 place.getAddress();
-                FirebaseDatabase.getInstance().getReference().child("Places").child(place.getName()).setValue(true);
 
+
+                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        startTimeHour = hourOfDay;
+                        startTimeMin = minute;
+                        startTimeList.add(new Pair<>(startTimeHour, startTimeMin));
+                        // End Time dialog
+                        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                endTimeHour = hourOfDay;
+                                endTimeMin = minute;
+                                endTimeList.add(new Pair<>(endTimeHour, endTimeMin));
+                                //adapter1.getTime(startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+
+                                // add activity to itinerary
+                                FirebaseDatabase.getInstance().getReference().child("Places").child(place.getName()).setValue(true);
+                            }
+                        };
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);
+                        timePickerDialog.setTitle("Select End Time");
+                        timePickerDialog.show();
+                    }
+                };
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);
+                timePickerDialog.setTitle("Select Start Time");
+                timePickerDialog.show();
             }
 
             @Override
@@ -114,7 +148,7 @@ public class ItineraryFragment extends Fragment {
         listViewMenu.setAdapter(programAdapter);
 
         RecyclerView listViewChoosen = (RecyclerView) view.findViewById(R.id.list_view_display);
-        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, getActivity());
+        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, getActivity(), startTimeList, endTimeList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listViewChoosen.setLayoutManager(linearLayoutManager);
         listViewChoosen.setAdapter(adapter1);

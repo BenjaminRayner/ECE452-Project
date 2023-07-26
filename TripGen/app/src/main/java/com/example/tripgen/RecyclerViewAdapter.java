@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,12 +50,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Fragment mFragment;
     Activity mActivity;
     GoogleApi googleApi;
+    List<Pair<Integer, Integer>> startTimeList;
+    List<Pair<Integer, Integer>> endTimeList;
 
-    public RecyclerViewAdapter(Fragment fragment, List<String> titleList, Activity activity) {
+    public RecyclerViewAdapter(Fragment fragment, List<String> titleList, Activity activity, List<Pair<Integer, Integer>> startTimeList, List<Pair<Integer, Integer>> endTimeList) {
         this.mFragment = fragment;
         this.titleList = titleList;
         this.mActivity = activity;
         this.googleApi = new GoogleApi(mActivity);
+        this.startTimeList = startTimeList;
+        this.endTimeList = endTimeList;
     }
     @NonNull
     @Override
@@ -73,6 +78,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof PlaceViewHolder) {
             // Adding title of the place
             ((PlaceViewHolder) holder).textView.setText(titleList.get(position / 2));
+//            int startHour = startTimeList.get(position / 2).first;
+//            int startMinute = startTimeList.get(position / 2).second;
+//            int endHour = endTimeList.get(position / 2).first;
+//            int endMinute = endTimeList.get(position / 2).second;
+//            ((PlaceViewHolder) holder).timeView.setText("Start Time: "+startHour+":"+startMinute+"      "+"End Time: "+endHour+":"+endMinute);
             // Adding the images from API
             googleApi.getPictureOfLocationToManipulate(titleList.get(position / 2), new GoogleApi.FetchPictureCallback() {
                 @Override
@@ -222,12 +232,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class PlaceViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
+        TextView timeView;
         ImageView imageView;
 
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textViewItinerary);
             imageView = itemView.findViewById(R.id.imageViewItinerary);
+            timeView = itemView.findViewById(R.id.startTimeText);
             itemView.setOnClickListener(view -> {
                 String location = textView.getText().toString();
                 Bundle args = new Bundle();

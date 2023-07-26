@@ -28,17 +28,17 @@
         android:layout_marginEnd="8dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/rowCountTextView"
+        app:layout_constraintBottom_toTopOf="@+id/startTimeText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewItinerary"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/rowCountTextView"
+        android:id="@+id/startTimeText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:text="Test"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
