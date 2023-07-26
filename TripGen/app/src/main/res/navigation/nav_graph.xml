@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.tripgen.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label=""
         tools:layout="@layout/fragment_first">
 
         <action
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/aiChatFragment"
         android:name="com.example.tripgen.AIChatFragment"
-        android:label="AI Chat Fragment"
+        android:label="AI Chat"
         tools:layout="@layout/fragment_a_i_chat">
     </fragment>
     <fragment
