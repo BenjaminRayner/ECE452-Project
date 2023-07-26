@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ListAdapter extends BaseAdapter {
 
     Context context;
-    String[] list;
+    ArrayList<String> list;
 
-    public ListAdapter(Context context, String[] list) {
+    public ListAdapter(Context context, ArrayList<String> list) {
         this.context = context;
         this.list = list;
     }
@@ -20,7 +22,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.length;
+        return list.size();
     }
 
     @Override
@@ -40,7 +42,7 @@ public class ListAdapter extends BaseAdapter {
         }
 
         TextView textView = view.findViewById(R.id.textview);
-        textView.setText(list[i]);
+        textView.setText(list.get(i));
 
         return view;
     }

@@ -29,7 +29,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tripgen.databinding.FragmentAIChatBinding;
 import com.example.tripgen.databinding.FragmentFirstBinding;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -60,6 +61,8 @@ public class AIChatFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        MainActivity mainActivity = (MainActivity) requireActivity();
 
         // Set reverse layout
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -280,7 +283,11 @@ public class AIChatFragment extends Fragment {
                                 System.out.println(endTimeHour); // end time hour
                                 System.out.println(endTimeMin); // end time min
                                 Toast.makeText(getContext(), "Place: " + placeName + " added to itinerary", Toast.LENGTH_SHORT).show();
-//                                FirebaseDatabase.getInstance().getReference().child("Places").child(placeName).setValue(true);
+
+
+                                // add activity to itinerary
+                                com.example.tripgen.Activity activity = new com.example.tripgen.Activity(placeName, startTimeHour + startTimeMin, startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+                                db.collection("Trips").document(mainActivity.currentTrip).collection(mainActivity.currentDay).add(activity);
                             }
                         };
                         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);

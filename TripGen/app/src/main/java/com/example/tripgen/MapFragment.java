@@ -141,7 +141,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
 
         //save button init
-        Button saveButton = view.findViewById(R.id.searchButton2);
+//        Button saveButton = view.findViewById(R.id.searchButton2);
 
         //TESTING
 //        getDistanceTime("Niagra Falls", "CN Tower", "driving");
@@ -153,16 +153,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //makeNearbyPlaceRequestToManipulate();
         //getPictureOfLocationToManipulate("Niagara Falls");
 
-        saveButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-//                ArrayList<String> locations = new ArrayList<>();
-//                locations.add("Markham");
-//                locations.add("CN Tower");
-//                locations.add("Niagara Falls");
-//                openGoogleMapsWithDirections(locations);
-            }
-        });
+//        saveButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+////                ArrayList<String> locations = new ArrayList<>();
+////                locations.add("Markham");
+////                locations.add("CN Tower");
+////                locations.add("Niagara Falls");
+////                openGoogleMapsWithDirections(locations);
+//            }
+//        });
 
 
         Button expenseViewButton = view.findViewById(R.id.expenseViewButton);

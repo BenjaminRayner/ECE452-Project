@@ -1,5 +1,7 @@
 package com.example.tripgen;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +33,7 @@ public class Budget {
     private String trip_ID;
     private Map<String, List<Expense>> activityExpenseMap;
     private Map<String, CategoryData> categoryDataMap;
+    public Budget () {}
     public Budget(String trip_ID, int transportationBudget, int accommodationBudget, int foodBudget, int activitiesBudget) {
         this.trip_ID = trip_ID;
         activityExpenseMap = new HashMap<>();
@@ -54,6 +57,10 @@ public class Budget {
     public String getTripID() {
         return trip_ID;
     }
+    public Map<String, List<Expense>> getActivityExpenseMap() {
+        return activityExpenseMap;
+    }
+    public Map<String, CategoryData> getCategoryDataMap() { return categoryDataMap; }
 
     public void setBudget(Category category, int budget) {
         CategoryData categoryData = getCategoryData(category);
@@ -111,10 +118,11 @@ public class Budget {
         return categoryDataMap.get(category.toString());
     }
 
-    public class CategoryData {
+    public static class CategoryData {
         private int budget;
         private double total;
 
+        public CategoryData() {}
         public CategoryData(int budget) {
             this.budget = budget;
             this.total = 0;
@@ -141,8 +149,9 @@ public class Budget {
     public static class Expense implements Serializable{
         private Category category;
         private double amount;
-        private final String attachedActivity;
+        private String attachedActivity;
 
+        public Expense () {}
         public Expense(Category category, double amount, String attachedActivity) {
             this.category = category;
             this.amount = amount;

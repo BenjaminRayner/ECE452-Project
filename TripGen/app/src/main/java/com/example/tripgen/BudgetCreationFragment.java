@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +22,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class BudgetCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentBudgetCreationBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         PieChart pieChart = binding.categoryDistChart;
         pieChart.getDescription().setEnabled(false);
@@ -95,18 +99,16 @@ public class BudgetCreationFragment extends Fragment {
             int foodBudget = parse_value(binding.foodEditText);
             int activityBudget = parse_value(binding.activityEditText);
 
-        // Must be updating budget
-        if (budgetViewModel.validBudget()) {
-            budgetViewModel.updateBudget(transportationBudget, accommodationBudget, activityBudget, foodBudget);
+            MainActivity mainActivity = (MainActivity) requireActivity();
+            db.collection("Trips").document(mainActivity.currentTrip).update(
+                    "transportationBudget", transportationBudget,
+                    "accommodationBudget", accommodationBudget,
+                    "foodBudget", foodBudget,
+                    "activityBudget", activityBudget
+            );
 
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.popBackStack();
-        } else {
-            // TODO: Remove static trip ID
-            budgetViewModel.createBudget("Test1", transportationBudget, accommodationBudget, activityBudget, foodBudget);
             NavHostFragment.findNavController(BudgetCreationFragment.this)
                     .navigate(R.id.action_BudgetCreationFragment_to_DateFragment);
-        }
     });
 
         return view;

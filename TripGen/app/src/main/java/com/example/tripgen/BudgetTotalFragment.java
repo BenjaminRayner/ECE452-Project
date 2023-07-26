@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +20,10 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +31,14 @@ import java.util.List;
 public class BudgetTotalFragment extends Fragment {
 
     private FragmentBudgetTotalBinding binding;
-    private BudgetViewModel budgetViewModel;
+//    private BudgetViewModel budgetViewModel;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentBudgetTotalBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         PieChart pieChart = binding.categoryDistChart;
         pieChart.getDescription().setEnabled(false);
@@ -49,54 +55,75 @@ public class BudgetTotalFragment extends Fragment {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setDrawInside(true);
 
-        budgetViewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
-        budgetViewModel.setContext(getContext());
+        MainActivity mainActivity = (MainActivity) requireActivity();
+        db.collection("Trips").document(mainActivity.currentTrip).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                Trip trip = value.toObject(Trip.class);
+
+                int numCategories = Budget.Category.values().length;
+
+                double[] totals = new double[numCategories];
+                int [] budgets = new int[numCategories];
+                for (int i=0; i<numCategories; i++) {
+                    Budget.Category category = Budget.Category.values()[i];
+                    int total = 0;
+                    int budget = 0;
+                    if (category.name().equals("TRANSPORTATION")) {
+                        total = trip.transportationExpenses;
+                        budget = trip.transportationBudget;
+                    }
+                    if (category.name().equals("ACCOMMODATION")) {
+                        total = trip.accommodationExpenses;
+                        budget = trip.accommodationBudget;
+                    }
+                    if (category.name().equals("FOOD")) {
+                        total = trip.foodExpenses;
+                        budget = trip.foodBudget;
+                    }
+                    if (category.name().equals("ACTIVITIES")) {
+                        total = trip.activityExpenses;
+                        budget = trip.activityBudget;
+                    }
+                    totals[i] = total;
+                    budgets[i] = budget;
+                }
+
+                updatePieChart(totals);
 
 
+                TextView[] textViews = {
+                        binding.transportationText,
+                        binding.accommodationText,
+                        binding.activityText,
+                        binding.foodText
+                };
 
-        int numCategories = Budget.Category.values().length;
-
-        double[] totals = new double[numCategories];
-        int [] budgets = new int[numCategories];
-        for (int i=0; i<numCategories; i++) {
-            Budget.Category category = Budget.Category.values()[i];
-            totals[i] = budgetViewModel.getTotal(category);
-            budgets[i] = budgetViewModel.getBudget(category);
-        }
-
-        updatePieChart(totals);
+                for (int i=0; i<textViews.length; i++) {
+                    if (totals[i] > budgets[i]) {
+                        textViews[i].setTextColor(Color.RED);
+                    } else {
+                        textViews[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.underBudgetText));
+                    }
 
 
-        TextView[] textViews = {
-                binding.transportationText,
-                binding.accommodationText,
-                binding.activityText,
-                binding.foodText
-        };
-
-        for (int i=0; i<textViews.length; i++) {
-            if (totals[i] > budgets[i]) {
-                textViews[i].setTextColor(Color.RED);
-            } else {
-                textViews[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.underBudgetText));
+                    String formattedTotal;
+                    if ((totals[i] * 100) % 100 != 0) {
+                        formattedTotal = String.format("%.2f", totals[i]);
+                    } else {
+                        formattedTotal = String.format("%.0f", totals[i]);
+                    }
+                    textViews[i].setText(formattedTotal + " / " + Integer.toString(budgets[i]));
+                }
             }
-
-
-            String formattedTotal;
-            if ((totals[i] * 100) % 100 != 0) {
-                formattedTotal = String.format("%.2f", totals[i]);
-            } else {
-                formattedTotal = String.format("%.0f", totals[i]);
-            }
-            textViews[i].setText(formattedTotal + " / " + Integer.toString(budgets[i]));
-        }
-
-
+        });
 
         binding.editBudgetFab.setOnClickListener(v -> {
             NavHostFragment.findNavController(BudgetTotalFragment.this)
                     .navigate(R.id.action_BudgetTotalFragment_to_BudgetCreationFragment);
         });
+
+
 
         return view;
     }

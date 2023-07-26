@@ -37,7 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -52,14 +54,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     GoogleApi googleApi;
     List<Pair<Integer, Integer>> startTimeList;
     List<Pair<Integer, Integer>> endTimeList;
+    HashMap<String, String> activityIDs;
+    MainActivity mainActivity;
 
-    public RecyclerViewAdapter(Fragment fragment, List<String> titleList, Activity activity, List<Pair<Integer, Integer>> startTimeList, List<Pair<Integer, Integer>> endTimeList) {
+    public RecyclerViewAdapter(Fragment fragment, List<String> titleList, Activity activity, List<Pair<Integer, Integer>> startTimeList, List<Pair<Integer, Integer>> endTimeList, HashMap<String, String> activityIDs, MainActivity mainActivity) {
         this.mFragment = fragment;
         this.titleList = titleList;
         this.mActivity = activity;
         this.googleApi = new GoogleApi(mActivity);
         this.startTimeList = startTimeList;
         this.endTimeList = endTimeList;
+        this.activityIDs = activityIDs;
+        this.mainActivity = mainActivity;
     }
     @NonNull
     @Override
@@ -78,6 +84,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof PlaceViewHolder) {
             // Adding title of the place
             ((PlaceViewHolder) holder).textView.setText(titleList.get(position / 2));
+            ((PlaceViewHolder) holder).timeView.setText(String.format("%02d", startTimeList.get(position / 2).first) + ":" + String.format("%02d", startTimeList.get(position / 2).second) + " - " + String.format("%02d", endTimeList.get(position / 2).first) + ":" + String.format("%02d", (endTimeList.get(position / 2).second)));
 //            int startHour = startTimeList.get(position / 2).first;
 //            int startMinute = startTimeList.get(position / 2).second;
 //            int endHour = endTimeList.get(position / 2).first;
@@ -242,6 +249,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             timeView = itemView.findViewById(R.id.startTimeText);
             itemView.setOnClickListener(view -> {
                 String location = textView.getText().toString();
+                mainActivity.currentActivity = activityIDs.get(location);
                 Bundle args = new Bundle();
                 args.putString("location", location);
                 Log.d("RecyclerViewAdapter", "Sending location argument: " + location);

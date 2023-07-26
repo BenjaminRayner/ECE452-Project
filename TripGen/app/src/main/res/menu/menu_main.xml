@@ -10,4 +10,7 @@
     <item
         android:id="@+id/action_ai_chat"
         android:title="AI Chat"/>
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"/>
 </menu>

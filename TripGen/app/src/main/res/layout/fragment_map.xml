@@ -50,31 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/editTextText2"
-                    android:layout_width="211dp"
-                    android:layout_height="47dp"
-                    android:ems="10"
-                    android:hint="@string/enter_notes"
-                    android:inputType="text" />
-
-                <Button
-                    android:id="@+id/searchButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/save" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonAddPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="120dp"
-                android:text="Add Photos" />
+                android:orientation="horizontal"/>
 
         </LinearLayout>
 

@@ -12,9 +12,9 @@ import java.util.List;
 public class ExpenseAdapter extends BaseAdapter {
 
     Context context;
-    List<Budget.Expense> expenses;
+    List<Expense> expenses;
 
-    public ExpenseAdapter(Context context, List<Budget.Expense> expenses) {
+    public ExpenseAdapter(Context context, List<Expense> expenses) {
         this.context = context;
         this.expenses = expenses;
     }
@@ -41,14 +41,14 @@ public class ExpenseAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.expense_layout, viewGroup, false);
         }
 
-        Budget.Expense expense = expenses.get(i);
+        Expense expense = expenses.get(i);
 
         TextView amountText = view.findViewById(R.id.amountText);
-        double amount = expense.getAmount();
+        double amount = expense.price;
         amountText.setText(String.format("$%.2f", amount));
 
         TextView categoryTag = view.findViewById(R.id.categoryTag);
-        categoryTag.setText(expense.getCategory().toString());
+        categoryTag.setText(expense.category);
 
         return view;
     }

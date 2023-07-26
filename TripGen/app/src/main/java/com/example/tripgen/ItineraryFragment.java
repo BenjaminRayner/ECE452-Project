@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -40,24 +41,32 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+//import com.google.firebase.database.ChildEventListener;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -77,6 +86,7 @@ public class ItineraryFragment extends Fragment {
     private int startTimeHour, startTimeMin, endTimeHour, endTimeMin;
     String [] location_names = {};
     int [] location_images = {};
+    HashMap<String, String> activityIDs = new HashMap<>();
 
     LinearLayout linearLayout;
 
@@ -89,10 +99,15 @@ public class ItineraryFragment extends Fragment {
 
     ProgramAdapter programAdapter;
 
+    FirebaseFirestore db;
+    MainActivity mainActivity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentItineraryBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        db = FirebaseFirestore.getInstance();
+        mainActivity = (MainActivity) requireActivity();
 
         events = EVENTS;
 
@@ -135,7 +150,8 @@ public class ItineraryFragment extends Fragment {
                                 //adapter1.getTime(startTimeHour, startTimeMin, endTimeHour, endTimeMin);
 
                                 // add activity to itinerary
-                                FirebaseDatabase.getInstance().getReference().child("Places").child(place.getName()).setValue(true);
+                                Activity activity = new Activity(place.getName(), startTimeHour + startTimeMin, startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+                                db.collection("Trips").document(mainActivity.currentTrip).collection(mainActivity.currentDay).add(activity);
                             }
                         };
                         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, startTimeHour, startTimeMin, true);
@@ -160,7 +176,7 @@ public class ItineraryFragment extends Fragment {
         listViewMenu.setAdapter(programAdapter);
 
         RecyclerView listViewChoosen = (RecyclerView) view.findViewById(R.id.list_view_display);
-        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, getActivity(), startTimeList, endTimeList);
+        adapter1 = new RecyclerViewAdapter(ItineraryFragment.this, programAdapter.choosen_location_names, getActivity(), startTimeList, endTimeList, activityIDs, (MainActivity) requireActivity());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         listViewChoosen.setLayoutManager(linearLayoutManager);
         listViewChoosen.setAdapter(adapter1);
@@ -178,35 +194,24 @@ public class ItineraryFragment extends Fragment {
 
 
         //Keep listview synced with firebase DB
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Places");
-        db.addChildEventListener(new ChildEventListener() {
+        db.collection("Trips").document(mainActivity.currentTrip).collection(mainActivity.currentDay).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                programAdapter.choosen_location_names.add(snapshot.getKey());
-//                System.out.println(programAdapter.getStartTimeHour());
-//                System.out.println(programAdapter.getStartTimeMin());
-//                System.out.println(programAdapter.getEndTimeHour());
-//                System.out.println(programAdapter.getEndTimeMin());
-                // save this event to firebase
-                Event e = new Event(programAdapter.getPlaceImage(), programAdapter.getPlaceName(),"",programAdapter.getStartTimeHour(), programAdapter.getStartTimeMin(), programAdapter.getEndTimeHour(),programAdapter.getEndTimeMin());
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                programAdapter.choosen_location_names.clear();
+                startTimeList.clear();
+                endTimeList.clear();
+                activityIDs.clear();
+                for (DocumentSnapshot document : value.getDocuments()) {
+                    Activity activity = document.toObject(Activity.class);
+                    programAdapter.choosen_location_names.add(activity.name);
+                    startTimeList.add(new Pair<>(activity.startTimeHour, activity.startTimeMin));
+                    endTimeList.add(new Pair<>(activity.endTimeHour, activity.endTimeMin));
+                    activityIDs.put(activity.name, document.getId());
+                }
                 adapter1.notifyDataSetChanged();
-                System.out.println(programAdapter.choosen_location_names);
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                programAdapter.choosen_location_names.remove(snapshot.getKey());
-                adapter1.notifyDataSetChanged();
-            }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
         Button routeButton = view.findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,10 +313,15 @@ public class ItineraryFragment extends Fragment {
 
             System.out.println("deleting: "+viewHolder.getAdapterPosition());
             System.out.println("size: "+programAdapter.choosen_location_names.size());
-            FirebaseDatabase.getInstance().getReference().child("Places").child(programAdapter.choosen_location_names.get((int) Math.ceil(viewHolder.getAdapterPosition()/2))).removeValue();
 
-            //programAdapter.choosen_location_names.remove(viewHolder.getAdapterPosition());
-            adapter1.notifyDataSetChanged();
+            db.collection("Trips").document(mainActivity.currentTrip).collection(mainActivity.currentDay).whereEqualTo("name", programAdapter.choosen_location_names.get((int) Math.ceil(viewHolder.getAdapterPosition()/2))).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        document.getReference().delete();
+                    }
+                }
+            });
         }
     };
 

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +95,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
 
     private void setPlace(String name){
         Toast.makeText(getContext(), "Place: " + name + " added to itinerary", Toast.LENGTH_SHORT).show();
-        FirebaseDatabase.getInstance().getReference().child("Places").child(name).setValue(true);
+//        FirebaseDatabase.getInstance().getReference().child("Places").child(name).setValue(true);
     }
     public List<String> getPlacesList(){
         return choosen_location_names;
