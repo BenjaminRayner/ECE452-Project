@@ -63,8 +63,8 @@ public class ItineraryFragment extends Fragment {
     private PlacesClient placesClient;
     private GoogleMap googleMap;
     private int startTimeHour, startTimeMin, endTimeHour, endTimeMin;
-    String [] location_names = {"CN Tower", "Casa Loma", "Royal Ontario Museum", "Ripley's Aquarium"};
-    int [] location_images = {R.drawable.cn_tower, R.drawable.casa_loma, R.drawable.rom, R.drawable.ripleys};
+    String [] location_names = {};
+    int [] location_images = {};
 
     LinearLayout linearLayout;
 
