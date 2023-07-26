@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.tripgen.FirstFragment"
-        android:label=""
+        android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/aiChatFragment"
         android:name="com.example.tripgen.AIChatFragment"
-        android:label="AI Chat"
+        android:label="AI Chat Fragment"
         tools:layout="@layout/fragment_a_i_chat">
     </fragment>
     <fragment
@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_DateFragment_to_BudgetTotalFragment"
             app:destination="@id/BudgetTotalFragment" />
+        <action
+            android:id="@+id/action_DateFragment_to_ShareFragment"
+            app:destination="@id/ShareFragment" />
     </fragment>
     <fragment
         android:id="@+id/TripCreationFragment"
@@ -150,5 +153,12 @@
         <action
             android:id="@+id/action_BudgetTotalFragment_to_BudgetCreationFragment"
             app:destination="@id/BudgetCreationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ShareFragment"
+        android:name="com.example.tripgen.ShareFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_share">
     </fragment>
 </navigation>

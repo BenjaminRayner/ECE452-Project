@@ -92,10 +92,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if (id == R.id.action_ai_chat) {
             Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
                     .navigate(R.id.action_ItineraryFragment_to_AIChatFragment);
@@ -105,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout) {
             auth.signOut();
             Navigation.findNavController(this, R.id.nav_host_fragment_content_main).popBackStack(R.id.FirstFragment, false);
+        }
+
+        if (id ==  R.id.action_share) {
+            Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_DateFragment_to_ShareFragment);
         }
 
 
