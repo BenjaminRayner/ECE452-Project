@@ -1,5 +1,8 @@
 package com.example.tripgen;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -15,14 +18,27 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.tripgen.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    FirebaseAuth auth;
+    String currentTrip;
+    String currentDay;
+    String currentActivity;
+    String currentExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +64,20 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
+    // If user is already logged in, skip login page
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        // Get firebase authentication instance
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            Navigation.findNavController(this, R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -62,15 +92,22 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if (id == R.id.action_ai_chat) {
             Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
                     .navigate(R.id.action_ItineraryFragment_to_AIChatFragment);
             return true;
         }
+        // Go back to login page on logout
+        if (id == R.id.action_logout) {
+            auth.signOut();
+            Navigation.findNavController(this, R.id.nav_host_fragment_content_main).popBackStack(R.id.FirstFragment, false);
+        }
+
+        if (id ==  R.id.action_share) {
+            Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_DateFragment_to_ShareFragment);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

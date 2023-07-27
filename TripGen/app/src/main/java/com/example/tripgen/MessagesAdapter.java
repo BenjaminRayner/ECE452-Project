@@ -78,8 +78,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         }else if (holder instanceof ListItemViewHolder) {
             ((ListItemViewHolder) holder).textView1.setText(currentMessage.getContent());
-            ((ListItemViewHolder) holder).textView2.setText(currentMessage.getDescription());
-            ((ListItemViewHolder) holder).imageView.setImageResource(currentMessage.getImageId());
+            // Set Bitmap as ImageView
+            ((ListItemViewHolder) holder).imageView.setImageBitmap(currentMessage.getImageBitmap());
+
             ((ListItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,7 +91,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         }
-
     }
 
     @Override
@@ -113,13 +113,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
     public class ListItemViewHolder extends RecyclerView.ViewHolder {
-        TextView textView1, textView2;
+        TextView textView1, textView2,textView3;;
+
         ImageView imageView;
 
         public ListItemViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.textView1);
-            textView2 = itemView.findViewById(R.id.textView2);
             imageView = itemView.findViewById(R.id.imageView);
         }
     }
@@ -133,7 +133,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public OptionViewHolder(@NonNull View itemView) {
             super(itemView);
             optionButton = itemView.findViewById(R.id.messageTextView);
-            // Change `R.id.messageTextView` to the ID of your button in item_message_options layout
         }
     }
 }
