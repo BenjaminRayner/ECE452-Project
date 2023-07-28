@@ -40,6 +40,8 @@
 |2023/07/20|          |       |         |        |       |  2.0 | Add start/end time to activities |
 |2023/07/23|          |       |         |   10   |       |      | Completed create/update/view fragments for expense & budget |
 |2023/07/23|          |       |    7.0  |        |       |      | Open Google Maps app, getting distance/time between locations api, and bug fixes|
+|2023/07/24|          |  2.0  |         |        |       |      | gradiant buttons 
+|2023/07/24|          |  3.0  |         |        |       |      | AI chat screen improvements
 |2023/07/24|          |  5.0  |   5.0   |        |       |  5.0 | Refactoring GoogleAPI to another class and connecting API to frontent
 |2023/07/25|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | Bug fixing and testing
 |2023/07/28|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | D6: Project Arch & Design
