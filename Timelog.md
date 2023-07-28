@@ -24,9 +24,10 @@
 |2023/06/25|    3.0   |  3.0  |   3.0   |   3.0  |  3.0  |  3.0 | Group merge and conflict fix and debug |
 |2023/06/27|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D3 Meeting |
 |2023/06/29|          |       |   0.5   |   0.5  |  0.5  |  0.5 | D3 Deliverable |
+|2023/07/08|          |  2.0  |         |        |       |      | Learning OpenAI api |
 |2023/07/11|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D4 Deliverable Meeting|
 |2023/07/12|          |       |         |   1.5  |       |      | Created Budget classes |
-|2023/07/13|          |       |   1.0   |   1.0  |  1.0  |  1.0 | D4 Work|
+|2023/07/13|          |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D4 Work|
 |2023/07/13|          |       |   5.0   |        |       |      | initial work with google api |
 |2023/07/13|          |       |         |        |       |  5.0 | Drag and Drop in Itinerary |
 |2023/07/13|          |       |         |   5.0  |       |      | Implementing budget creation fragment |
@@ -39,6 +40,8 @@
 |2023/07/18|    1.5   |  1.5  |   1.5   |   1.5  |  1.5  |  1.5 | D5 Deliverable Meeting |
 |2023/07/19|          |       |         |   2    |       |      | Budget summary view |
 |2023/07/20|          |       |         |        |       |  2.0 | Add start/end time to activities |
+|2023/07/21|          |  6    |         |        |       |      | OpenAI implementation |
+|2023/07/23|          |  5    |         |        |       |      | Chatbot functionality complement and google api connections created |
 |2023/07/23|          |       |         |   10   |       |      | Completed create/update/view fragments for expense & budget |
 |2023/07/23|          |       |    7.0  |        |       |      | Open Google Maps app, getting distance/time between locations api, and bug fixes|
 |2023/07/24|          |  2.0  |         |        |       |      | gradiant buttons 
