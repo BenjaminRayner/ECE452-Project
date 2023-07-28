@@ -27,7 +27,7 @@
 |2023/07/08|          |  2.0  |         |        |       |      | Learning OpenAI api |
 |2023/07/11|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D4 Deliverable Meeting|
 |2023/07/12|          |       |         |   1.5  |       |      | Created Budget classes |
-|2023/07/13|          |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D4 Work|
+|2023/07/13|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D4 Work|
 |2023/07/13|          |       |   5.0   |        |       |      | initial work with google api |
 |2023/07/13|          |       |         |        |       |  5.0 | Drag and Drop in Itinerary |
 |2023/07/13|          |       |         |   5.0  |       |      | Implementing budget creation fragment |
