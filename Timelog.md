@@ -10,7 +10,7 @@
 |2023/06/01|    2.0   |       |         |        |  2.0  |  2.0 | Drawing Sequence Diagrams (Itinerary & Budget)|
 |2023/06/01|          |  4.0  |         |        |       |      | Figma Mockups |
 |2023/06/10|    3.0   |       |         |        |       |      | Android Studio Learning |
-|2023/06/16|          |       |   4.0   |        |  4.0  |      | Android Studio Learning |
+|2023/06/16|          |  4.0  |   4.0   |        |  4.0  |      | Android Studio Learning |
 |2023/06/17|          |       |         |   3.0  |       |  4.0 | Android Studio Learning |
 |2023/06/13|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D2 meeting |
 |2023/06/15|    0.5   |       |   0.5   |        |  0.5  |  0.5 | D2 Deliverable |
