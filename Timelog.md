@@ -40,8 +40,8 @@
 |2023/07/18|    1.5   |  1.5  |   1.5   |   1.5  |  1.5  |  1.5 | D5 Deliverable Meeting |
 |2023/07/19|          |       |         |   2    |       |      | Budget summary view |
 |2023/07/20|          |       |         |        |       |  2.0 | Add start/end time to activities |
-|2023/07/21|          |  6    |         |        |       |      | OpenAI implementation |
-|2023/07/23|          |  5    |         |        |       |      | Chatbot functionality complement and google api connections created |
+|2023/07/21|          |  6.0  |         |        |       |      | OpenAI implementation |
+|2023/07/23|          |  5.0  |         |        |       |      | Chatbot functionality complement and google api connections created |
 |2023/07/23|          |       |         |   10   |       |      | Completed create/update/view fragments for expense & budget |
 |2023/07/23|          |       |    7.0  |        |       |      | Open Google Maps app, getting distance/time between locations api, and bug fixes|
 |2023/07/24|          |  2.0  |         |        |       |      | gradiant buttons 
