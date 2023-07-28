@@ -44,8 +44,12 @@
 |2023/07/23|          |  5.0  |         |        |       |      | Chatbot functionality completed and google api connections created |
 |2023/07/23|          |       |         |   10   |       |      | Completed create/update/view fragments for expense & budget |
 |2023/07/23|          |       |    7.0  |        |       |      | Open Google Maps app, getting distance/time between locations api, and bug fixes|
+|2023/07/23|    4.0   |       |         |        |       |      | Database migration, account creation, login merge|
+|2023/07/24|    10.0  |       |         |        |       |      | New synchronization code|
 |2023/07/24|          |  2.0  |         |        |       |      | gradiant buttons 
 |2023/07/24|          |  3.0  |         |        |       |      | AI chat screen improvements
 |2023/07/24|          |  5.0  |   5.0   |        |       |  5.0 | Refactoring GoogleAPI to another class and connecting API to frontent
 |2023/07/25|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | Bug fixing and testing
+|2023/07/26|    2.0   |  2.0  |   2.0   |  2.0   |  2.0  |  2.0 | D5: Video recording
+|2023/07/26|    1.0   |       |         |        |       |      | Video editing
 |2023/07/28|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | D6: Project Arch & Design
