@@ -47,7 +47,7 @@
 |2023/07/23|          |       |    7.0  |        |       |      | Open Google Maps app, getting distance/time between locations API, and bug fixes|
 |2023/07/23|    4.0   |       |         |        |       |      | Database migration, account creation, login merge|
 |2023/07/23|          |       |         |        |  8.0  |      | Developed adding photos & notte-taking features for the map view itinerary |
-|2023/07/24|          |       |         |        |  4.0 |       | Created major updates & Refactoring to Events/AI Chat fragment, Itinerary/Map Fragments, RecyclerView & Message, Button_item/Row_item|
+|2023/07/24|          |       |         |        |  4.0 |       | Created updates & Refactoring to Events/AI Chat fragment, Itinerary/Map Fragments, RecyclerView & Message, Button_item/Row_item|
 |2023/07/24|          |       |         |        |  2.0  |      | Updates to other fragments (Budget, FirstFragment, ItineraryFragment)|
 |2023/07/24|    10.0  |       |         |        |       |      | New synchronization code|
 |2023/07/24|          |  2.0  |         |        |       |      | Gradient buttons 
