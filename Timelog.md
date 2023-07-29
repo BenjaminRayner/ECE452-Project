@@ -56,6 +56,7 @@
 |2023/07/25|          |       |         |        |  8.0 |       | Developed commute mode of transportation selection features to the itinerary (driving, transit, walking) |
 |2023/07/25|          |       |         |  5.0   |      |       | UI/UX updates to Budget and Expense fragments, navigation |
 |2023/07/25|          |       |         |        |  3.0 |       | Created major updates to RecyclerView & button_item.xml to reflect transit commute option changes |
+|2023/07/25|          |       |         |        |       |  6.0 | Integrated daily itinerary with Google APIs |
 |2023/07/25|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | Bug fixing and testing |
 |2023/07/26|    2.0   |  2.0  |   2.0   |  2.0   |  2.0  |  2.0 | D6: Video Recording |
 |2023/07/26|    1.0   |       |         |        |       |      | Video editing |
