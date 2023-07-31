@@ -44,6 +44,7 @@
 |2023/07/21|          |  6.0  |         |        |       |      | OpenAI implementation |
 |2023/07/23|          |  5.0  |         |        |       |      | Chatbot functionality completed and google API connections created |
 |2023/07/23|          |       |         |   10   |       |      | Completed create/update/view fragments for expense & budget |
+|2023/07/23|          |       |         |        |       |  6.0 | Itinerary recyclerView redesign |
 |2023/07/23|          |       |    7.0  |        |       |      | Open Google Maps app, getting distance/time between locations API, and bug fixes|
 |2023/07/23|    4.0   |       |         |        |       |      | Database migration, account creation, login merge|
 |2023/07/23|          |       |         |        |  8.0  |      | Developed adding photos & note-taking features for the map view itinerary |
