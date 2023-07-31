@@ -62,3 +62,4 @@
 |2023/07/26|    1.0   |       |         |        |       |      | Video editing |
 |2023/07/26|          |       |         |        |  1.0  |      | Merging & Refactoring all changes into main branch |
 |2023/07/28|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | D6: Project Arch & Design |
+|2023/07/28|    1.0   |  1.0  |   1.0   |  1.0   |  1.0  |  1.0 | D7: Final Status Report |
