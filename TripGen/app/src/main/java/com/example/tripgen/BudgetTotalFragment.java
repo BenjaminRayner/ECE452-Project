@@ -97,8 +97,8 @@ public class BudgetTotalFragment extends Fragment {
                 TextView[] textViews = {
                         binding.transportationText,
                         binding.accommodationText,
-                        binding.activityText,
-                        binding.foodText
+                        binding.foodText,
+                        binding.activityText
                 };
 
                 for (int i=0; i<textViews.length; i++) {
