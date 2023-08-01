@@ -50,6 +50,7 @@ public class DateFragment extends Fragment {
                 LocalDate startDate = LocalDate.ofEpochDay(trip.startDate);
                 LocalDate endDate = LocalDate.ofEpochDay(trip.endDate);
                 int numDays = Period.between(startDate, endDate).getDays() + 1;
+                dates.clear();
                 for (int i = 0; i < numDays; ++i) {
                     dates.add(startDate.toString());
                     startDate = startDate.plusDays(1);
