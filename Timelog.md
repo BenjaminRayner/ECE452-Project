@@ -26,6 +26,7 @@
 |2023/06/27|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D3: Meeting |
 |2023/06/29|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D3: Deliverable |
 |2023/07/08|          |  2.0  |         |        |       |      | Learning OpenAI API |
+|2023/07/09|          |       |   3.0   |        |       |      | Learning about Google API functionality |
 |2023/07/11|    0.5   |  0.5  |   0.5   |   0.5  |  0.5  |  0.5 | D4: Deliverable Meeting|
 |2023/07/12|          |       |         |   1.5  |       |      | Created Budget classes |
 |2023/07/13|    1.0   |  1.0  |   1.0   |   1.0  |  1.0  |  1.0 | D4: Work|
@@ -63,4 +64,6 @@
 |2023/07/26|    1.0   |       |         |        |       |      | Video editing |
 |2023/07/26|          |       |         |        |  1.0  |      | Merging & Refactoring all changes into main branch |
 |2023/07/28|    4.0   |  4.0  |   4.0   |  4.0   |  4.0  |  4.0 | D6: Project Arch & Design |
-|2023/07/28|    1.0   |  1.0  |   1.0   |  1.0   |  1.0  |  1.0 | D7: Final Status Report |
+|2023/07/28|    1.0   |  1.0  |   1.0   |  1.0   |  1.0  |  1.0 | D7: Final Status Report Meeting|
+|2023/08/01|    1.0   |  1.0  |   1.0   |  1.0   |  1.0  |  1.0 | D7: writeup
+
